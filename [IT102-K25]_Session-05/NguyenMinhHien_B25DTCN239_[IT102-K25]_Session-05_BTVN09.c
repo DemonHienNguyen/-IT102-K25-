@@ -37,12 +37,12 @@ int main (){
 			printf("luong cua ban la: %.3f", Luong);
 			break;
 		case 2 :
-			Phucap = 10000000;
+			Phucap = 1000000;
 			Luong = Songaycong * 160000 * Hesoluong + Phucap +Thuong;
 			printf("luong cua ban la: %.3f", Luong);
 			break;
 		case 3 :
-			Phucap = 20000000;
+			Phucap = 2000000;
 			Luong = Songaycong * 160000 * Hesoluong + Phucap +Thuong;
 			printf("luong cua ban la: %.3f", Luong);
 			break;
@@ -52,3 +52,4 @@ int main (){
 	}
 	return 0;
 }
+
