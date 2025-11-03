@@ -2,25 +2,31 @@
 
 int i, j;
 
-void xuatVaTongCheoPhu(int N, int array[N][N]){
+void sumPrime(int N, int array[N]){
 
-int k;
+int isPrime;
 int sum =0;
-
-
-printf("\t-----CAC PHAN TU CHEO TRONG MANG LA-----\n   ");
-	for(i = 0; i < N; i++){
-		k = N -1- i;
-		if(k >= 0){
-			printf("\t %5d", array[i][k]);
-			sum += array[i][k];
-		}else{
-			break;
+	for( i = 0; i < N; i++ ){
+		isPrime = 1;
+		if(array[i] <= 1){
+			continue;
 		}
+		for(j =2; j*j<= array[i]; j++ ){
+			if(array[i] % j==0){
+				isPrime = 0;
+				break;
+			}
+		}
+	if (isPrime == 1){
+		sum += array[i];
+		printf("\ncac so nguyen to trong mang la :");
+		printf("%d \n", array[i]);
 	}
-printf("\n");
-printf("\t-----TONG CAC PHAN TU CHEO TRONG MANG LA-----\n");
-printf("\t\t\t %5d", sum);
+}
+	printf("tong cac so nguyen to la = ");
+	printf("%d ", sum );
+
+
 }
 
 
@@ -35,22 +41,17 @@ do{
 	}
 }while(n <= 0);
 
-int maTran[n][n];
+int maTran[n];
 
 printf("\t-----NHAP PHAN TU TRONG MANG-----\n");
 	for(i = 0; i < n; i++){
-		for(j = 0; j <n; j++){
-			printf("Array[%d][%d]: ", i, j);
-			scanf("%d", &maTran[i][j]);
+			printf("Array[%d]: ", i);
+			scanf("%d", &maTran[i]);
 		}
-	}
 printf("\t-----VAY MANG LA-----\n ");
 	for(i =0; i< n; i++){
-		for(j = 0; j < n; j++){
-			printf("\t %5d", maTran[i][j]);
-		}
-	printf("\n");
-	}
-xuatVaTongCheoPhu(n, maTran);
+			printf("\t %5d", maTran[i]);
+		}    
+sumPrime(n, maTran);
 return 0;
 }
