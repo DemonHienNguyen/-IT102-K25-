@@ -19,7 +19,21 @@ void sortSomething(Dish ptr[], int *length, int choice);
 // khai bao bien
 
 
+void sortByNameAsc(Dish ptr[], int *length) {
+	int i, j;
+	Dish temp; 
+	for (i = 0; i < *length - 1; i++) {
+		for (j = 0; j < *length - 1 - i; j++) {
 
+			if (strcmp(ptr[j].name, ptr[j+1].name) > 0) {
+				temp = ptr[j];
+				ptr[j] = ptr[j+1];
+				ptr[j+1] = temp;
+			}
+		}
+	}
+	printf("Danh sach mon an da duoc sap xep theo ten (A -> Z) thanh cong!\n");
+}
 
 
 void removeBuffer(){
@@ -141,13 +155,11 @@ void sortSomething(Dish ptr[], int *length, int choice){
 	}
 	printf("Sap xep thanh cong ! \n");
 }
-void findSomething(Dish ptr[], int *length, int choice, int*Sort){
+void findSomething(Dish ptr[], int *length, int choice){
 	int i, j;
 	int find = 0;
 	char findName[50];
-	printf("Nhap Mon An Ma ban Muon Tim: ");
-	fgets(findName, sizeof(findName), stdin);
-	removeNewLine(findName);
+
 	if(choice == 1){
 		printf("Nhap Mon An Ma ban Muon Tim: ");
 		fgets(findName, sizeof(findName), stdin);
@@ -161,18 +173,32 @@ void findSomething(Dish ptr[], int *length, int choice, int*Sort){
 		if(find){
 			printf("Da tim thay mon %s o vi tri thu %d \n", findName, i+1);
 		}else{
-			printf("Khong tim thay mon %s trong menu ! \n")
+			printf("Khong tim thay mon %s trong menu ! \n");
 		}
-	}else if(choice == 2 && *Sort = 1){
+	}else if(choice == 2){
+		printf("Nhap Mon An Ma ban Muon Tim: ");
+		fgets(findName, sizeof(findName), stdin);
+		removeNewLine(findName);
+		sortByNameAsc(ptr, length);
 		int left = 0;
+		int find = 0;
 		int right = *length - 1;
 		int mid;
 		while(left <= right){
-			mid = left + (right -left)/2
-			if(strcmp(ptr[i].name, findName) == 0){
-				
-				
+			mid = left + (right -left)/2;
+			if(strcmp(ptr[mid].name, findName) == 0){
+				find = 1;
+				break;
+			}else if(strcmp(ptr[mid].name, findName) < 0){
+				left = mid +1;
+			}else if (strcmp(ptr[mid].name, findName) > 0){
+				right = mid + 1;
 			}
+		}
+		if(find){
+			printf("Da tim thay mon %s o vi tri thu %d \n", findName, mid);
+		}else{
+			printf("Khong tim thay mon %s trong menu ! \n", findName);
 		}
 	}else if(choice == 3){
 		printf("Cam on Vi da Den :D \n");
@@ -182,6 +208,7 @@ void findSomething(Dish ptr[], int *length, int choice, int*Sort){
 	}
 	printf("thanh cong ! \n");
 	}
+
 
 
 int main(){
@@ -246,6 +273,8 @@ int main(){
 				printf("\t\t\t++====================================================++\n");
 				printf("-------- Lua chon cua ban: ");
 				scanf("%d", &findChoice);
+				removeBuffer();
+				findSomething(menu, &size, findChoice);
 				break;
 			}
 			case 7 :{
@@ -259,4 +288,3 @@ int main(){
 
 	return 0;
 }
-
