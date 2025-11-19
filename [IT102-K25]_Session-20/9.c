@@ -127,25 +127,26 @@ void deleteSomething(Dish ptr[], int *length){
 }
 void sortSomething(Dish ptr[], int *length, int choice){
 	int i, j;
-	float temp;
+	Dish temp;
 	if(choice == 1){
 		for(i = 0; i < (*length) -1; i ++){
 			for(j = 0; j < (*length) - i - 1; j++){
 				if(ptr[j].price < ptr[j + 1].price){
-					temp = ptr[j].price;
-					ptr[j].price = ptr[j+1].price;
-					ptr[j+1].price = temp;
+					temp = ptr[j];
+					ptr[j] = ptr[j+1];
+					ptr[j+1]= temp;
 				}
 			}
 		}
 		
 	}else if(choice == 2){
+		
 		for(i = 0; i < (*length) -1; i ++){
 			for(j = 0; j < (*length) - i - 1; j++){
 				if(ptr[j].price > ptr[j + 1].price){
-					temp = ptr[j].price;
-					ptr[j].price = ptr[j+1].price;
-					ptr[j+1].price = temp;
+					temp = ptr[j];
+					ptr[j] = ptr[j+1];
+					ptr[j+1] = temp;
 				}
 			}
 		}
@@ -288,3 +289,4 @@ int main(){
 
 	return 0;
 }
+
