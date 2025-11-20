@@ -11,6 +11,8 @@ typedef struct{
 	int quantity;
 }Product ;
 
+
+//
 void removeBuffer(){
 	 int c;
 	 while((c = getchar()) != '\n' && c != EOF);
@@ -58,9 +60,10 @@ void insertproduct(Product **Pt, int *length){
 		printf("Nhap gia Ban cua ban: ");
 		scanf("%f", &(*Pt)[currentIndex + i].selling_Price);
 		removeBuffer();
-		printf("Nhap so luong cua san pham: ");
-		scanf("%d", &(*Pt)[currentIndex + i].quantity);
-		removeBuffer();
+//		printf("Nhap so luong cua san pham: ");
+//		scanf("%d", &(*Pt)[currentIndex + i].quantity);
+//		removeBuffer();
+		(*Pt)[currentIndex + i].quantity = 0;
 	}
 	(*length) += index;
 }
@@ -149,9 +152,9 @@ void UpdateProduct(Product **Pt, int *length){
 	if(findIndex != -1){
 		printf("Ten SP: %s | Gia Nhap: %.f | Gia Ban : %.1f | So Luong: %d |\n", (*Pt)[findIndex].name, (*Pt)[findIndex].importPrice, (*Pt)[findIndex].selling_Price, (*Pt)[findIndex].quantity);
 		printf(">>>Cap nhap thong tin moi cho SP %d \n", 100 + findIndex);
-		printf("Vui long Nhap Ma Sach Moi:");
-		scanf("%d", &(*Pt)[findIndex].id);
-		removeBuffer();
+//		printf("Vui long Nhap Ma Sach Moi:");
+//		scanf("%d", &(*Pt)[findIndex].id);
+//		removeBuffer();
 		printf("Nhap ten cua San pham moi : ");
 		fgets(newProduct, 50, stdin);
 		removeNewLine(newProduct);
@@ -248,12 +251,14 @@ void soldProduct(Product **Pt, int *length, float *revenuePtr){
 		printf("Nhap so luong ma ban can ban: ");
 		scanf("%d", &soldQuatity);
 		removeBuffer();
-		if((*Pt)[findIndex].quantity > 0){
+		if(soldQuatity <= (*Pt)[findIndex].quantity){
 			(*Pt)[findIndex].quantity = (*Pt)[findIndex].quantity - soldQuatity;
 			*revenuePtr += soldQuatity  * (*Pt)[findIndex].selling_Price;
 			printf("Ban thanh cong ! \n");
 		}else if ((*Pt)[findIndex].quantity == 0){
 			printf("DA HET HANG ! xin vui long khong mua nua !!!\n");
+		}else if(soldQuatity > (*Pt)[findIndex].quantity ){
+			printf("Hang Ban Qua Muc cho ! Vui long nhap them hang \n");
 		}
 	}else{
 		printf("Khong tim thay ten %s trong danh sach !", findName);
