@@ -365,7 +365,9 @@ void insertEmployee(Employee **empPtr, int *length, int *employee){
 void printEmployee(Employee *empPtr, int *length, int *employee){
 	int totalEmployees = (*length);
 	int choice;
-	int totalPage = ((*length) + EMP_PER_PAGE - 1) / EMP_PER_PAGE;
+	char choiceMenu;
+	int empPerPage;
+
 	// lam tron so trang ( tai vi neu lay length /EMP_PER_PAGE -> lam tron xuong                      VD 11 / 5 = 2 -> khong dung !);
 	// vay nen khi ta muon tron so trang len thi phai dung (length + EMP_PER_PAGE - 1)/EMP_PER_PAGE   VD (11 + 5 -1) / 5 = 3 -> dung !);
 	if((*length) == 0){
@@ -374,13 +376,16 @@ void printEmployee(Employee *empPtr, int *length, int *employee){
 		printf("\t\t\tVui long nhap thong tin nhan vien !\n");
 		printf("\t\t\t===================================\n");
 	}else{
-		
+		printf("Nhap so luong nhan vien hien len trong danh sach: ");
+		valudateChoice(&empPerPage);
+		int totalPage = ((*length) + empPerPage - 1) / empPerPage;
 		for(int page = 0; page < totalPage; page ++){
 			do{
+			system("cls"); 
 			printf("\n\n\n\n\n\n\n\n\n\t\t\tTong so nhan vien: %d | Tong so trang: %d\n", totalEmployees, totalPage);
 			printf("\t\t\t\t\t\t      >>> Trang thu %d <<<\n", page + 1);
-			int startIndex = page * EMP_PER_PAGE;
-			int endIndex = (page + 1) * EMP_PER_PAGE;
+			int startIndex = page * empPerPage;
+			int endIndex = (page + 1) * empPerPage;
 			if(endIndex > totalEmployees){
 				endIndex = totalEmployees;
 			}
@@ -396,31 +401,33 @@ void printEmployee(Employee *empPtr, int *length, int *employee){
                empPtr[i].baseSalary,
                empPtr[i].workDay);
     		}
+    		printf("\t\t\t++-------------------------------------------------------------------------------++\n");
     		printf("\t\t\t++===============================================================================++\n");
-    		printf("\t\t\tSo luong nhan vien co : %d \n",*employee); 
-    		printf("\t\t\t++===============================================================================++\n");
-    		printf("\t\t\t||    1. tro ve trang truoc    |        2. Thoat         |      3. Trang tiep    ||\n");
+    		printf("\t\t\t||    q. tro ve trang truoc    |        w. Thoat         |      e. Trang tiep    ||\n");
     		printf("\t\t\t++===============================================================================++\n");
     		printf("\t\t\tVui long nhap lua chon cua ban: ");
-    			valudateChoice(&choice);
-    			switch (choice){
-    				case 1 :
-    					if(page == 0){
-    						printf("\t\t\tKhong co trang truoc ! \n");
+    			scanf("%c",&choiceMenu);
+    			while(getchar() != '\n');
+    			switch (choiceMenu){
+    				case 'c' : case 'C' : 
+    					if(page > 1){
+    						(page)--;
 						}else{
-							(page)--;
+							printf("\t\t\tKhong co trang truoc ! \n");
 						}
-					case 2 :
 						break;
-					case 3 :
+					case 'w' : case  'W' :
+							return;
+					case 'e' : case 'E' :
 						if (page < totalPage -1){
-						page++;
+							page++;
 						}
 						else{
 							printf("\t\t\tDay la trang cuoi cung ! \n");
 						}
+						break;
     				}
-    			}while(choice != 2);
+    			}while(1);
 		}
 	}
 }
@@ -669,8 +676,8 @@ void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee){
 		do{
 			printf("\t\t\t++========MENU SAP XEP========++\n");
 			printf("\t\t\t||%-28s||\n", "1. Sap xep tang dan");
-			printf("\t\t\t||%-28s||\n", "2. Sap xep giam dan ");
-			printf("\t\t\t||%-28s||\n", "3. Thoat ");
+			printf("\t\t\t||%-28s||\n", "2. Sap xep giam dan");
+			printf("\t\t\t||%-28s||\n", "3. Quay lai");
 			printf("\t\t\t++============================++\n");
 			printf("----Lua chon cua ban: ");
 			valudateChoice(&(*sortchoice));
@@ -863,11 +870,13 @@ int main(){
 		printf("Cap phat thanh cong ! \n");
 	}
 	do{
+		system("cls"); // xoa tat ca man hinh tren man hinh consol
 		printMenu();
 		valudateChoice(&choice);
 		switch (choice){
 			case 1 :{
 				do{
+					system("cls"); 
 					managementList();
 					valudateChoice(&choice);
 					switch (choice){
@@ -885,7 +894,7 @@ int main(){
 										break;
 									}
 									case 3 : {
-										printf("Thoat \n");
+										printf("Thoat thanh cong\n");
 										break;
 									}
 									default :
