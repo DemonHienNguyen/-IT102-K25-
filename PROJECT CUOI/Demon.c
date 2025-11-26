@@ -168,7 +168,6 @@ int forSure(int choice, char *something){
 	printf("Ban co chac %s hay khong\n(1: Yes|0: No): ", something);
 	do{
 		valudateChoice(&choice);
-		removeBuffer();
 		if( choice > 1 || choice < 0){
 			printf("Vui long chi chon 0 Hoac 1: ");
 		}
@@ -177,6 +176,8 @@ int forSure(int choice, char *something){
 }
 int validateDate(char *datePtr){
 	int day, month, year;
+	int is_leap;
+	
 	//                 day/month/year
 	if(sscanf(datePtr, "%d/%d/%d", &day, &month, &year ) != 3){
 		return 0;
@@ -184,28 +185,82 @@ int validateDate(char *datePtr){
 	if(month < 1 || month > 12 ||day < 1 || day > 31){
 		return 0;
 	}else{
-		if(day == 31){
-			if(month  == 1|| month  == 3 ||  month ==  7 || month == 8 ||  month == 10 || month ==  12){
-				return 1;
-			}
-		}else if(day == 30){
-			if(month == 4 || month == 6 || month == 9 || month == 11){
-				return 1;
-			}
-		}else if(day == 28 || day == 29){
-			if(month == 2){
-				return 1;
-			}
+		is_leap = (year % 4 == 0 && year % 100 != 0 || year % 400 == 0);
+		int days_in_month[] = {0, 31, 28 + is_leap, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		if(month > days_in_month[month]){
+			return 0;
 		}
 	}
-	return 0;
+	return 1;
 }
+// ham dac biet
 
-//ham dat biet
+// ham in an
+void printLine(){
+	printf("+--------------------------------------------------------------------------------------------------------------+\n");
+}
+void displayEmployee(const Employee *emp) {
+    printf("|Ma ID: %-10s |Ten: %-20s |Chuc vu: %-10s |Luong: %-15.1lf      |Ngay cong: %03d |\n",
+        emp->empId,
+        emp->nameEmp,
+        emp->position, 
+        emp->baseSalary,
+        emp->workDay);
+}
+void printMenu(){
+	printf("\n\t\t\t++====================MENU====================++\n");
+	printf("\t\t\t||%-44s||\n", "1. Quan ly");
+	printf("\t\t\t||%-44s||\n", "2. Nhan Vien");
+	printf("\t\t\t||%-44s||\n", "3. Thoat ");
+	printf("\t\t\t++============================================++\n");
+	printf("-------- Lua chon cua ban: ");
+}
+void managementList(){ // danh sach quan ly
+	printf("\n\t\t\t++===========MENU QUAN LY============++\n");
+	printf("\t\t\t||%-35s||\n", "1. Quan ly ho so va tuyen dung");
+	printf("\t\t\t||%-35s||\n", "2. Quan ly nhan su");
+	printf("\t\t\t||%-35s||\n", "3. Quan ly du lieu va bao cao");
+	printf("\t\t\t||%-35s||\n", "4. Quay lai ");
+	printf("\t\t\t++===================================++\n");
+	printf("-------- Lua chon cua ban: ");
+}
+void profileManagementList(){ // quan ly ho so
+	printf("\n\t\t\t++===========QUAN LY HO SO===========++\n");
+	printf("\t\t\t||%-35s||\n", "1. Them Nhan Vien Moi");
+	printf("\t\t\t||%-35s||\n", "2. Cap nhap ho so nhan vien");
+	printf("\t\t\t||%-35s||\n", "3. Quay lai ");
+	printf("\t\t\t++===================================++\n");
+	printf("-------- Lua chon cua ban: ");
+}
+void civilAdministrationList(){ // quan ly nhan su
+	printf("\n\t\t\t++==============QUAN LY NHAN SU===============++\n");
+	printf("\t\t\t||%-44s||\n", "1. Sa thai nhan vien");
+	printf("\t\t\t||%-44s||\n", "2. Quay lai");
+	printf("\t\t\t++============================================++\n");
+	printf("-------- Lua chon cua ban: ");
+}
+void dataManagementAndReportingList(){  // quan ly du lieu va bao cao
+	printf("\n\t\t\t++=========QUAN LY DU LIEU VA BAO CAO=========++\n");
+	printf("\t\t\t||%-44s||\n", "1. Hien thi danh sach nhan vien");
+	printf("\t\t\t||%-44s||\n", "2. Tra cuu ho so");
+	printf("\t\t\t||%-44s||\n", "3. Sap xep danh sach nhan vien");
+	printf("\t\t\t||%-44s||\n", "4. Quay lai ");
+	printf("\t\t\t++============================================++\n");
+	printf("\t\t\t-------- Lua chon cua ban: ");
+	
+}
+void employeeList(){ // quan ly nhan vien
+	printf("\n\t\t\t++=====MENU NHAN VIEN=====++\n");
+	printf("\t\t\t||%-22s  ||\n", "1. Cham cong");
+	printf("\t\t\t||%-22s  ||\n", "2. Bang cham cong");
+	printf("\t\t\t||%-22s  ||\n", "3. Quay lai");
+	printf("\t\t\t++========================++\n");
+	printf("\t\t\t-------- Lua chon cua ban: ");
+}
+//ham in an
 
 // khai bao bien
 void insertEmployee(Employee **empPtr, int *length, int *employee);
-void printMenu();
 void printEmployee(Employee *empPtr, int *length, int *employee);
 void updateEmployee(Employee *empPtr, int *length);
 void DismissEmployee(Employee *empPtr, int *length, int *employee);
@@ -369,14 +424,6 @@ void printEmployee(Employee *empPtr, int *length, int *employee){
 		}
 	}
 }
-void printMenu(){
-	printf("\n\t\t\t++====================MENU====================++\n");
-	printf("\t\t\t||%-44s||\n", "1. Quan ly");
-	printf("\t\t\t||%-44s||\n", "2. Nhan Vien");
-	printf("\t\t\t||%-44s||\n", "3. Thoat ");
-	printf("\t\t\t++============================================++\n");
-	printf("-------- Lua chon cua ban: ");
-}
 void updateEmployee(Employee *empPtr, int *length){
 	char findID[20];
 	int size, exist;
@@ -411,14 +458,9 @@ void updateEmployee(Employee *empPtr, int *length){
 // in ra cac nhan vien da duoc tra cuu 
 	printf("\nDanh sach cac nhan vien ban da tra: \n");
 	for(int l = 0; l < insideIndex; l++){
-			printf("+--------------------------------------------------------------------------------------------------------------+\n");
-			printf("|Ma ID: %-10s |Ten: %-20s |Chuc vu: %-10s |Luong: %-15.1lf     |Ngay cong: %03d |\n"
-			,listFind[l].empId,
-			listFind[l].nameEmp,
-			listFind[l].position, 
-			listFind[l].baseSalary,
-			listFind[l].workDay);
-			printf("+--------------------------------------------------------------------------------------------------------------+\n");
+			printLine();
+			displayEmployee(&empPtr[l]);
+			printLine();
 	}
 // in ra cac nhan vien da duoc tra cuu	
 // lua chon ma nhan vien CHINH XAC ma can duoc cap nhap !
@@ -539,14 +581,9 @@ void DismissEmployee(Employee *empPtr, int *length, int *employee){
 // in ra cac nhan vien da duoc tra cuu 
 	printf("\nDanh sach cac nhan vien ban da tra: \n");
 	for(int l = 0; l < insideIndex; l++){
-			printf("+--------------------------------------------------------------------------------------------------------------+\n");
-			printf("|Ma ID: %-10s |Ten: %-20s |Chuc vu: %-10s |Luong: %-15.1lf     |Ngay cong: %03d |\n"
-			,listFind[l].empId,
-			listFind[l].nameEmp,
-			listFind[l].position, 
-			listFind[l].baseSalary,
-			listFind[l].workDay);
-			printf("+--------------------------------------------------------------------------------------------------------------+\n");
+			printLine();
+			displayEmployee(&empPtr[l]);
+			printLine();
 	}
 // in ra cac nhan vien da duoc tra cuu	
 // lua chon ma nhan vien CHINH XAC ma can duoc xoa !
@@ -691,7 +728,12 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 	// mang tim kiem
 	if((*length) == 0){
 		printf("\t\t\t>>> Khong co nhan vien de Cham Cong ! <<<\n");
-	}else{
+		return;
+	}
+	if ((*timeSheetLength) > MAX_TIME_EMP){
+		printf("Danh sach cham cong da day ! Khong the them ! \n");
+		return;
+	}	
 		do{
 			getString(newDate, 21, "Vui long nhap ngay/thang/nam cham cong (DD/MM/YYYY)");
 			if(validateDate(newDate)){
@@ -766,7 +808,6 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 			(*timeSheetLength) ++;
 			printf("Cham cong ngay %2s cho nhan vien %s thanh cong ! \n", newDate, empPtr[targetIndex].empId);
 		}
-	}
 }
 void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int *timeSheetLength){
 	char findId[20];
@@ -827,23 +868,12 @@ int main(){
 		switch (choice){
 			case 1 :{
 				do{
-					printf("\n\t\t\t++===========MENU QUAN LY============++\n");
-					printf("\t\t\t||%-35s||\n", "1. Quan ly ho so va tuyen dung");
-					printf("\t\t\t||%-35s||\n", "2. Quan ly nhan su");
-					printf("\t\t\t||%-35s||\n", "3. Quan ly du lieu va bao cao");
-					printf("\t\t\t||%-35s||\n", "4. Thoat ");
-					printf("\t\t\t++===================================++\n");
-					printf("-------- Lua chon cua ban: ");
+					managementList();
 					valudateChoice(&choice);
 					switch (choice){
 						case 1 :
 							do{
-								printf("\n\t\t\t++===========QUAN LY HO SO===========++\n");
-								printf("\t\t\t||%-35s||\n", "1. Them Nhan Vien Moi");
-								printf("\t\t\t||%-35s||\n", "2. Cap nhap ho so nhan vien");
-								printf("\t\t\t||%-35s||\n", "3. Thoat ");
-								printf("\t\t\t++===================================++\n");
-								printf("-------- Lua chon cua ban: ");
+								profileManagementList();
 								valudateChoice(&recordAndRecruitmentManagementChoice);
 								switch (recordAndRecruitmentManagementChoice){
 									case 1 :{
@@ -866,11 +896,7 @@ int main(){
 						 
 						case 2 :
 							do{
-								printf("\n\t\t\t++==============QUAN LY NHAN SU===============++\n");
-								printf("\t\t\t||%-44s||\n", "1. Sa thai nhan vien");
-								printf("\t\t\t||%-44s||\n", "2. Thoat");
-								printf("\t\t\t++============================================++\n");
-								printf("-------- Lua chon cua ban: ");
+								civilAdministrationList();
 								valudateChoice(&humanResourceManagementChoice);
 								switch (humanResourceManagementChoice){
 									case 1 :{
@@ -889,13 +915,7 @@ int main(){
 						
 						case 3 :
 							do{
-								printf("\n\t\t\t++=========QUAN LY DU LIEU VA BAO CAO=========++\n");
-								printf("\t\t\t||%-44s||\n", "1. Hien thi danh sach nhan vien");
-								printf("\t\t\t||%-44s||\n", "2. Tra cuu ho so");
-								printf("\t\t\t||%-44s||\n", "3. Sap xep danh sach nhan vien");
-								printf("\t\t\t||%-44s||\n", "4. Thoat ");
-								printf("\t\t\t++============================================++\n");
-								printf("-------- Lua chon cua ban: ");
+								dataManagementAndReportingList();
 								valudateChoice(&dataManagementAndReportingChoice);
 								switch (dataManagementAndReportingChoice){
 									case 1 :{
@@ -930,12 +950,7 @@ int main(){
 			}
 			case 2 :
 				do{
-					printf("\n\t\t\t++=====MENU NHAN VIEN=====++\n");
-					printf("\t\t\t||%-22s  ||\n", "1. Cham cong");
-					printf("\t\t\t||%-22s  ||\n", "2. Bang cham cong");
-					printf("\t\t\t||%-22s  ||\n", "3. Thoat");
-					printf("\t\t\t++========================++\n");
-					printf("-------- Lua chon cua ban: ");
+					employeeList();
 					valudateChoice(&choice);
 					switch (choice){
 						case 1 : 
@@ -962,11 +977,7 @@ int main(){
 			default :{
 				printf(" Lua chon cua ban ko chinh xac ! vui long nhap lai: ");
 			}
-			
 		}
 	}while(1);
-	
-	
-	
 	return 0;
 }
