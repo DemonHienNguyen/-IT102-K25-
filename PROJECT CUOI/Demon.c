@@ -14,10 +14,10 @@ typedef struct{
 }Employee;
 
 typedef struct{
-	char logId[20]; // M„ giao dich / nhat ky (Sinh ngau nhiÍn hoac tu tang). 
+	char logId[20]; // M√£ giao dich / nhat ky (Sinh ngau nhi√™n hoac tu tang). 
 	char empId[20]; // ma tai khoan nhan vien
-	char date[20]; //ngay cham cong (vÌ d?: "DD/MM/YYYY").
-	char status[10]; //loai cham cong (VÌ d?: "–i l‡m", "Nghi").
+	char date[20]; //ngay cham cong (v√≠ d?: "DD/MM/YYYY").
+	char status[10]; //loai cham cong (V√≠ d?: "√êi l√†m", "Nghi").
 }TimeSheet;
 // ham phu tro 
 void removeBuffer(){
@@ -89,8 +89,7 @@ void getString(char *c, int max, char *something){
 		}
 		if(sizeOfString == 0 ){
 			printf("Loi !\nVui long nhap lai: ");
-		}
-		else if(onlySpace(c)){
+		}else if(onlySpace(c)){
 			printf("khong duoc chua dau cach va khong duoc bo trong !\n");
 		}else{
 			break;
@@ -178,13 +177,28 @@ int forSure(int choice, char *something){
 }
 int validateDate(char *datePtr){
 	int day, month, year;
+	//                 day/month/year
 	if(sscanf(datePtr, "%d/%d/%d", &day, &month, &year ) != 3){
 		return 0;
 	}
 	if(month < 1 || month > 12 ||day < 1 || day > 31){
 		return 0;
+	}else{
+		if(day == 31){
+			if(month  == 1|| month  == 3 ||  month ==  7 || month == 8 ||  month == 10 || month ==  12){
+				return 1;
+			}
+		}else if(day == 30){
+			if(month == 4 || month == 6 || month == 9 || month == 11){
+				return 1;
+			}
+		}else if(day == 28 || day == 29){
+			if(month == 2){
+				return 1;
+			}
+		}
 	}
-	return 1;
+	return 0;
 }
 
 //ham dat biet
@@ -668,12 +682,12 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 	char newDate[20];
 	int newIndex;
 	int currentLog = (*timeSheetLength);
-	int isDuplicated;
+	int timeSheetIndex;
 	// mang tim kiem 
 	Employee listFind[20];
 	int insideIndex = 0; 
-	int targetIndex;
-	char findNewID[10];
+	int targetIndex = -1;
+	char finalId[20];
 	// mang tim kiem
 	if((*length) == 0){
 		printf("\t\t\t>>> Khong co nhan vien de Cham Cong ! <<<\n");
@@ -686,6 +700,8 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 				printf("Ngay/thang/nam khong hop le !\n Vui long nhap lai ! \n ");
 			}
 		}while(1);
+		
+		
 		getString(findId, 21, "Vui long nhap ma nhan vien can duoc cham cong");
 		insideIndex = 0;
 	for(int i = 0; i  < *length; i++){
@@ -713,58 +729,42 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 		return;
 	}else if(insideIndex == 1){
 		// neu danh sach chi co mot nhan vien duy nhat
-		isDuplicated = 0; 
-		char *tempChar = empPtr[targetIndex].empId;
-			for(int j = 0 ; j  < (*timeSheetLength); j++){
-			if(strcmp(empTimePtr[j].empId,tempChar) == 0 && strcmp(empTimePtr[j].date,newDate) == 0){
-				isDuplicated = 1;
-				break;
-			}
-			}if(!isDuplicated){
-				newIndex = (*timeSheetLength);
-				strcpy(empTimePtr[newIndex].status, "Di lam");
-				strcpy(empTimePtr[newIndex].date,newDate);
-				sprintf(empTimePtr[newIndex].logId, "%d", 100 + currentLog);
-				strcpy(empTimePtr[newIndex].empId,empPtr[targetIndex].empId);
-				empPtr[targetIndex].workDay += 1;
-				(*timeSheetLength)++;
-				printf("Cham cong ngay %s cho nhan vien %s thanh cong ! \n", newDate,empPtr[targetIndex].empId );
-			}else{
-				printf("Ban da cham cong cho ngay hom nay roi ! \n");
-			}
+		strcpy(finalId, empPtr[targetIndex].empId);
+
 	}else{
 		// neu nhieu hon 1 nhan vien 
-			getString(findNewID, 21, "Vui long nhap ID CHINH XAC ma ban can cap nhap" );
-				targetIndex = - 1;
-				for(int i = 0; i  < *length; i++){
-					if(strcmp(empPtr[i].empId, findNewID) == 0){
-							targetIndex = i;
-							break;
-				}
+		getString(finalId, 21, "Vui long nhap ID CHINH XAC ma ban can cap nhap" );
+		targetIndex = - 1;
+		for(int i = 0; i  < *length; i++){
+			if(strcmp(empPtr[i].empId, finalId) == 0){
+					targetIndex = i;
+					break;
 			}
-			if(targetIndex != -1){
-				isDuplicated = 0;
-				for(int j = 0 ; j  < (*timeSheetLength); j++){
-					if(strcmp(empTimePtr[j].empId,findNewID) == 0 && strcmp(empTimePtr[j].date,newDate) == 0){
-						isDuplicated = 1;
-						break;
-					}
-				}
-				if(!isDuplicated){
-						newIndex = (*timeSheetLength);
-						strcpy(empTimePtr[newIndex].status, "Di lam");
-						strcpy(empTimePtr[newIndex].date,newDate);
-						sprintf(empTimePtr[newIndex].logId, "%d", 100 + currentLog);
-						strcpy(empTimePtr[newIndex].empId,empPtr[targetIndex].empId);
-						empPtr[targetIndex].workDay += 1;
-						(*timeSheetLength) ++;
-						printf("Cham cong ngay %2s cho nhan vien %s thanh cong ! \n", newDate, empPtr[targetIndex].empId);
-				}else{
-					printf("Ban da cham cong ngay hom nay roi !\n");
-				}
-			}else{
-				printf("Ma ID %s khong tim thay trong danh sach ! \n", findNewID); // kiem tra neu nguoi dung nhap khong thay ma
+		}
+		if(targetIndex == -1){
+			printf("Khong tim thay ma %s trong danh sach !\n");
+			return ;
+		}
+		strcpy(finalId, empPtr[targetIndex].empId);	
+	}
+		timeSheetIndex = -1;
+		for(int j = 0 ; j  < (*timeSheetLength); j++){
+			if(strcmp(empTimePtr[j].empId,finalId) == 0 && strcmp(empTimePtr[j].date,newDate) == 0){
+				timeSheetIndex = j;
+				break;
 			}
+		}
+		if(timeSheetIndex != -1){
+			printf("Nhan vien %s da cham cong vao ngay %s roi", empPtr[timeSheetIndex].empId, newDate);
+		}else{
+			newIndex = (*timeSheetLength);
+			strcpy(empTimePtr[newIndex].status, "Di lam");
+			strcpy(empTimePtr[newIndex].date,newDate);
+			sprintf(empTimePtr[newIndex].logId, "%d", 100 + currentLog);
+			strcpy(empTimePtr[newIndex].empId,empPtr[targetIndex].empId);
+			empPtr[targetIndex].workDay += 1;
+			(*timeSheetLength) ++;
+			printf("Cham cong ngay %2s cho nhan vien %s thanh cong ! \n", newDate, empPtr[targetIndex].empId);
 		}
 	}
 }
@@ -783,7 +783,7 @@ void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 			}
 		}
 		if(find){
-			printf("\t\t\tMa nhan vien: %s \n", findId);
+			printf("\n\n\n\t\t\tMa nhan vien: %s \n", findId);
 				printf("\n\t\t\t++==============DANH SACH CHAM CONG==================++\n");
 	   			printf("\t\t\t|| %-10s | %-20s | %-13s ||\n", 
 	        			"ID LOG", "NGAY CHAM", "TRANG THAI");
@@ -794,11 +794,6 @@ void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 		               empTimePtr[j].logId,
 		               empTimePtr[j].date,
 		               empTimePtr[j].status);
-					}else{
-					   printf("\t\t\t|| %-10s | %-20s | %-13s ||\n",
-		               empTimePtr[j].logId,
-		               empTimePtr[j].date,
-		               "Nghi lam");
 					}
 	    		}
 	    		printf("\t\t\t++===================================================++\n");
@@ -975,4 +970,3 @@ int main(){
 	
 	return 0;
 }
-
