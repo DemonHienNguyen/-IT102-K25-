@@ -1098,7 +1098,13 @@ int main(){
 				break;
 			
 			case 3 :
-				printf("Cam on vi da xu dung chuong trinh !\n DEMON OF AMBITTION :D \n");
+				printf("Cam on vi da xu dung chuong trinh !!!\n\n\n\n");
+				printf("%sDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%sDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%sDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%sDD   DD%s  %sEEEEE%s   %sMM M MM%s  %sOO  OO%s  %sNN N NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%sDD   DD%s  %sEE%s      %sMM   MM%s  %sOO  OO%s  %sNN  NNN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%sDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
 				exit(0);
 				break;
 				
