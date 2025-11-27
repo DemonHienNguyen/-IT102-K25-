@@ -899,25 +899,25 @@ int main(){
 	}else{
 		printf("Cap phat thanh cong ! \n");
 	}
-	empList[0] =  (Employee){"NV001","Nguyen Van A", "Quan Ly", 1600};
-	empList[1] =  (Employee){"NV002","Tran Van B", "Quan Ly", 1000};
-	empList[2] =  (Employee){"NV003","Nguyen Thi C", "Quan Ly", 1700};
-	empList[3] =  (Employee){"NV004","Nguyen Van D", "Quan Ly", 1700};
-	empList[4] =  (Employee){"NV005","Ngo Van E", "Quan Ly", 1400};
-	empList[5] =  (Employee){"NV006","Nguyen Minh F", "Nhan Vien", 1000};
-	empList[6] =  (Employee){"NV007","Nguyen Minh G", "Nhan Vien", 1100};
-	empList[7] =  (Employee){"NV008","Ngo Van H", "Nhan Vien", 1200};
-	empList[8] =  (Employee){"NV009","Nguyen Van L", "Nhan Vien", 1400};
-	empList[9] =  (Employee){"NV010","Nguyen Minh M", "Nhan Vien", 1800};
-	empList[10] =  (Employee){"NV011","Nguyen Minh Q", "Nhan Vien", 1100};
-	empList[11] =  (Employee){"NV012","Tran Van I", "Nhan Vien", 1200};
-	empList[12] =  (Employee){"NV013","Nguyen Minh J", "Nhan Vien", 1800};
-	empList[13] =  (Employee){"NV014","Nguyen Minh P", "Nhan Vien", 1800};
-	empList[14] =  (Employee){"NV015","Nguyen Thi K", "Nhan Vien", 1600};
-	empList[15] =  (Employee){"NV016","Nguyen Van L", "Thuc Tap Sinh", 1200};
-	empList[16] =  (Employee){"NV017","Tran Van Z", "Thuc tap sinh", 1300};
-	empList[17] =  (Employee){"NV018","Nguyen Thi T", "Thuc tap sinh", 1900};
-	empList[18] =  (Employee){"NV019","Tran Van R", "Thuc tap sinh", 1000};
+	empList[0] =  (Employee){"NV001","Song tong empity", "Quan Ly", 1600};
+	empList[1] =  (Employee){"NV002","SooBin Sam Son", "Quan Ly", 1000};
+	empList[2] =  (Employee){"NV003","Ngo Gia Tu", "Quan Ly", 1700};
+	empList[3] =  (Employee){"NV004","Sach Binh", "Quan Ly", 1700};
+	empList[4] =  (Employee){"NV005","Tan Thuy Hoang", "Quan Ly", 1400};
+	empList[5] =  (Employee){"NV006","Ca Ric", "Nhan Vien", 1000};
+	empList[6] =  (Employee){"NV007","Bell Gate", "Nhan Vien", 1100};
+	empList[7] =  (Employee){"NV008","Quy Buu Bach Khoa", "Nhan Vien", 1200};
+	empList[8] =  (Employee){"NV009","Binh Xang To", "Nhan Vien", 1400};
+	empList[9] =  (Employee){"NV010","Putin", "Nhan Vien", 1800};
+	empList[10] =  (Employee){"NV011","Ngan Chin Tam", "Nhan Vien", 1100};
+	empList[11] =  (Employee){"NV012","Hang Du Muc", "Nhan Vien", 1200};
+	empList[12] =  (Employee){"NV013","Quang Linh Vlogs", "Nhan Vien", 1800};
+	empList[13] =  (Employee){"NV014","Donal Trump", "Nhan Vien", 1800};
+	empList[14] =  (Employee){"NV015","Chu Be Te liet", "Nhan Vien", 1600};
+	empList[15] =  (Employee){"NV016","Vi Khuan", "Thuc Tap Sinh", 1200};
+	empList[16] =  (Employee){"NV017","Tra Bong", "Thuc tap sinh", 1300};
+	empList[17] =  (Employee){"NV018","Cau Banh", "Thuc tap sinh", 1900};
+	empList[18] =  (Employee){"NV019","Adolf Hitler", "Thuc tap sinh", 1000};
 	empList[19] =  (Employee){"NV020","Nguyen Minh Hien", "Chu Tich", 10000000};
 	do{
 		system("cls"); // xoa tat ca man hinh tren man hinh consol
@@ -944,11 +944,11 @@ int main(){
 										break;
 									}
 									case 3 : {
-										printf("Thoat thanh cong\n");
+										printf("Thoat thanh cong !\n");
 										break;
 									}
 									default :
-										printf("Vui long chi chon tu 1 -> 3: ");
+										printf("Vui long chi chon tu (1->3): ");
 								}
 							}while(recordAndRecruitmentManagementChoice != 3);
 							break;
@@ -967,7 +967,7 @@ int main(){
 										break;
 									}
 									default :
-										printf("Vui long chi chon tu 1 -> 2: ");
+										printf("Vui long chi chon tu (1 ->2): ");
 								}
 							}while(humanResourceManagementChoice != 2);
 							break;
@@ -1023,18 +1023,18 @@ int main(){
 							printf("Thoat thanh cong ! \n");
 							break;
 						default :
-							printf("Vui long chon 1-> 2: ");
+							printf("Vui long chon (1->2): ");
 					}
 				}while(choice != 3);
 				break;
 			
 			case 3 :
-				printf("Cam on vi da xu dung chuong trinh !\n");
+				printf("Cam on vi da xu dung chuong trinh !\n DEMON OF AMBITTION :D \n");
 				exit(0);
 				break;
 				
 			default :{
-				printf(" Lua chon cua ban ko chinh xac ! vui long nhap lai: ");
+				printf("Lua chon cua ban ko chinh xac ! vui long nhap lai: ");
 			}
 		}
 	}while(1);
