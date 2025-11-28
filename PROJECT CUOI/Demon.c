@@ -291,53 +291,53 @@ void displayEmployee(Employee *emp) {
 }
 // ham in Menu dau tien
 void printMenu(){
-	printf("%s\n\t\t\t++====================MENU====================++%s\n", BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "1. Quan ly",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "2. Nhan Vien",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "3. Thoat ",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s++============================================++%s\n",BRIGHT_CYAN, RESET);
+	printf("%s\n\t\t\t\t\t++====================MENU====================++%s\n", BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "1. Quan ly",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "2. Nhan Vien",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "3. Thoat ",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s++============================================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
 }
 void managementList(){ // danh sach quan ly
-	printf("%s\n\t\t\t++===========MENU QUAN LY============++%s\n",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n", BRIGHT_CYAN, RESET,"1. Quan ly ho so va tuyen dung",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "2. Quan ly nhan su",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "3. Quan ly du lieu va bao cao",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "4. Quay lai ",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s++===================================++%s\n",BRIGHT_CYAN, RESET);
-	printf("\t\t\t>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
+	printf("%s\n\t\t\t\t\t++===========MENU QUAN LY============++%s\n",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n", BRIGHT_CYAN, RESET,"1. Quan ly ho so va tuyen dung",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "2. Quan ly nhan su",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "3. Quan ly du lieu va bao cao",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "4. Quay lai ",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s++===================================++%s\n",BRIGHT_CYAN, RESET);
+	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
 }
 void profileManagementList(){ // quan ly ho so
-	printf("%s\n\t\t\t++===========QUAN LY HO SO===========++%s\n", BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "1. Them Nhan Vien Moi",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "2. Cap nhap ho so nhan vien",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "3. Quay lai ",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s++===================================++%s\n",BRIGHT_CYAN, RESET);
+	printf("%s\n\t\t\t\t\t++===========QUAN LY HO SO===========++%s\n", BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "1. Them Nhan Vien Moi",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "2. Cap nhap ho so nhan vien",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-35s%s||%s\n",BRIGHT_CYAN, RESET, "3. Quay lai ",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s++===================================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
 }
 void civilAdministrationList(){ // quan ly nhan su
-	printf("%s\n\t\t\t++==============QUAN LY NHAN SU===============++%s\n", BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "1. Sa thai nhan vien",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "2. Quay lai",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s++============================================++%s\n",BRIGHT_CYAN, RESET);
+	printf("%s\n\t\t\t\t\t++==============QUAN LY NHAN SU===============++%s\n", BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "1. Sa thai nhan vien",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "2. Quay lai",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s++============================================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
 }
 void dataManagementAndReportingList(){  // quan ly du lieu va bao cao
-	printf("%s\n\t\t\t++=========QUAN LY DU LIEU VA BAO CAO=========++%s\n", BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "1. Hien thi danh sach nhan vien",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "2. Tra cuu ho so",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "3. Sap xep danh sach nhan vien",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "4. Quay lai ",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s++============================================++%s\n",BRIGHT_CYAN, RESET);
+	printf("%s\n\t\t\t\t\t++=========QUAN LY DU LIEU VA BAO CAO=========++%s\n", BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "1. Hien thi danh sach nhan vien",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "2. Tra cuu ho so",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "3. Sap xep danh sach nhan vien",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-44s%s||%s\n",BRIGHT_CYAN, RESET, "4. Quay lai ",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s++============================================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s",BRIGHT_CYAN, RESET );
 	
 }
 void employeeList(){ // quan ly nhan vien
-	printf("%s\n\t\t\t++=====MENU NHAN VIEN=====++%s\n",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "1. Cham cong",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "2. Bang cham cong",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "3. Quay lai",BRIGHT_CYAN, RESET);
-	printf("\t\t\t%s++========================++%s\n",BRIGHT_CYAN, RESET);
+	printf("%s\n\\t\t\t\t\t++=====MENU NHAN VIEN=====++%s\n",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "1. Cham cong",BRIGHT_CYAN, RESET);
+	printf("\\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "2. Bang cham cong",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "3. Quay lai",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s++========================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
 }
 //ham in an
@@ -1038,12 +1038,12 @@ int main(){
 										break;
 									}
 									case 3 : {
-										printf("%sThoat thanh cong !\n%s", GREEN, RESET);
+										printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
 										sleep(1);
 										break;
 									}
 									default :
-										printf("%sVui long chi chon tu (1->3): %s", RED, RESET);
+										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
 								}
 							}while(recordAndRecruitmentManagementChoice != 3);
 							break;
@@ -1058,12 +1058,12 @@ int main(){
 										break;
 									}
 									case 2 : {
-										printf("%sThoat thanh cong\n%s", GREEN, RESET);
+										printf("%s\t\t\t>>> hoat thanh cong\n%s", GREEN, RESET);
 										sleep(1);
 										break;
 									}
 									default :
-										printf("%sVui long chi chon tu (1 ->2): %s", RED, RESET);
+										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
 								}
 							}while(humanResourceManagementChoice != 2);
 							break;
@@ -1086,17 +1086,17 @@ int main(){
 										break;
 									}
 									case 4 : {
-										printf("%sThoat thanh cong !\n%s", GREEN, RESET);
+										printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
 										sleep(1);
 										break;
 									}
 									default :
-										printf("%sVui long chi chon tu (1 -> 4): %s",RED, RESET);
+										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s",RED, RESET);
 								}
 							}while(dataManagementAndReportingChoice != 4);
 							break;
 						case 4 :
-							printf("%sThoat thanh cong !\n%s", GREEN, RESET);
+							printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
 							sleep(1);
 							break;
 						default :
@@ -1119,11 +1119,11 @@ int main(){
 							break;
 						}
 						case 3 :
-							printf("%sThoat thanh cong ! \n%s", GREEN, RESET);
+							printf("%s\t\t\t>>> Thoat thanh cong ! \n%s", GREEN, RESET);
 							sleep(1);
 							break;
 						default :
-							printf("%sVui long chon (1->2): %s", RED, RESET);
+							printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
 					}
 				}while(choice != 3);
 				break;
@@ -1132,13 +1132,15 @@ int main(){
 				free(empList);
 				free(empTime);
 				// mau me hoa la he :D
-				printf("Cam on vi da xu dung chuong trinh !!!\n\n\n\n");
-				printf("%sDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%sDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%sDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%sDD   DD%s  %sEEEEE%s   %sMM M MM%s  %sOO  OO%s  %sNN N NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%sDD   DD%s  %sEE%s      %sMM   MM%s  %sOO  OO%s  %sNN  NNN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%sDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("\t\t\t%s>>> Cam on vi da xu dung chuong trinh !!!%s", RED, RESET);
+				sleep(1);
+				system("cls");
+				printf("%s\t\t\t\tDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEEEEE%s   %sMM M MM%s  %sOO  OO%s  %sNN N NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMM   MM%s  %sOO  OO%s  %sNN  NNN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
 				exit(0);
 				break;
 				
@@ -1150,5 +1152,3 @@ int main(){
 	}while(1);
 	return 0;
 }
-
-
