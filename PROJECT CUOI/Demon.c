@@ -1,37 +1,39 @@
- #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <unistd.h>
-#define EMP_PER_PAGE 5
-#define MAX_TIME_EMP 100
-// BANG MAU
-/* ===========================
-   RESET
-   =========================== */
-#define RESET   "\033[0m"
+#include <stdio.h> // dung cho cac ham nhap -> xuat: printf(), fgets, scanf.  
+#include <stdlib.h> // dung ham cho exit(0), system("cls").
+#include <string.h>	// dung ham cho strtol, strtod, sscanf().
+#include <ctype.h> // ham dung cho isspace , isalpha, isdigit.
+#include <unistd.h> // ham dung cho:  sleep(int).
 
-/* ===========================
-   BASIC 16 COLORS (FOREGROUND)
-   =========================== */
-#define BLACK         "\033[30m"
-#define RED           "\033[31m"
-#define GREEN         "\033[32m"
-#define YELLOW        "\033[33m"
-#define BLUE          "\033[34m"
-#define MAGENTA       "\033[35m"
-#define CYAN          "\033[36m"
-#define WHITE         "\033[37m"
+#define EMP_PER_PAGE 5 // so luong nhan vien toi da moi trang - > co the thay doi lai duoc
+#define MAX_TIME_EMP 100 // so luong thoi gian Record toi da : 100 phan tu
 
-#define BRIGHT_BLACK   "\033[90m"
-#define BRIGHT_RED     "\033[91m"
-#define BRIGHT_GREEN   "\033[92m"
-#define BRIGHT_YELLOW  "\033[93m"
-#define BRIGHT_BLUE    "\033[94m"
-#define BRIGHT_MAGENTA "\033[95m"
-#define BRIGHT_CYAN    "\033[96m"
-#define BRIGHT_WHITE   "\033[97m"
-// BANG MAU
+							// BANG MAU
+							/* ===========================
+							   RESET
+							   =========================== */
+							#define RESET   "\033[0m"
+							
+							/* ===========================
+							   BASIC 16 COLORS (FOREGROUND)
+							   =========================== */
+							#define BLACK         "\033[30m"
+							#define RED           "\033[31m"
+							#define GREEN         "\033[32m"
+							#define YELLOW        "\033[33m"
+							#define BLUE          "\033[34m"
+							#define MAGENTA       "\033[35m"
+							#define CYAN          "\033[36m"
+							#define WHITE         "\033[37m"
+							
+							#define BRIGHT_BLACK   "\033[90m"
+							#define BRIGHT_RED     "\033[91m"
+							#define BRIGHT_GREEN   "\033[92m"
+							#define BRIGHT_YELLOW  "\033[93m"
+							#define BRIGHT_BLUE    "\033[94m"
+							#define BRIGHT_MAGENTA "\033[95m"
+							#define BRIGHT_CYAN    "\033[96m"
+							#define BRIGHT_WHITE   "\033[97m"
+							// BANG MAU
 typedef struct{
 	char empId[20];  // id cua nhan vien
 	char nameEmp[50]; // ten nhan vien
@@ -46,7 +48,236 @@ typedef struct{
 	char date[20]; //ngay cham cong (ví d?: "DD/MM/YYYY").
 	char status[10]; //loai cham cong (Ví d?: "Ði làm", "Nghi").
 }TimeSheet;
+
 // ham bi bo trong
+void removeBuffer();
+void removeNewLine(char *a);
+// ham bi bo trong
+
+
+// ham phu tro
+void getToUpper(char *b, int size);
+void deleteCharactor(char *string, int index);
+void removeSpace (char *str);
+int onlySpace(char *str);
+void getString(char *c, int max, char *something);
+int isDigitAndSpecial(char *b, int size);
+// ham phu tro
+
+// ham dac biet
+void inputToName(char *a, int size);
+void valudateChoice(int *choicePtr);
+void valudateSalary(double *choicePtr);
+int forSure(int choice, char *something);
+int validateDate(char *datePtr);
+// ham dac biet
+
+// ham in an
+void printLine();
+void displayEmployee(Employee *emp);
+void printMenu();
+void managementList();
+void profileManagementList();
+void dataManagementAndReportingList();
+void civilAdministrationList();
+void employeeList();
+//ham in an
+
+// khai bao bien
+int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
+void insertEmployee(Employee **empPtr, int *length, int *employee); 
+void printEmployee(Employee *empPtr, int *length, int *employee);
+void updateEmployee(Employee *empPtr, int *length);
+void DismissEmployee(Employee *empPtr, int *length, int *employee);
+void findEmployeeByName(Employee *empPtr, int *length);
+void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee);
+void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length , int *timeSheetLength);
+void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int *timeSheetLength);
+//khai bao bien
+ 
+
+// ket thuc !!!
+int main(){
+	int size = 20; // kich co cung nhu so luong nhan vien luc dau luon !
+	int sizeTime = 0;  // kich cu cua Record -> se tang khi nhan vien cham cong
+	int choice; // lua chon khi moi vao Menu
+	int recordAndRecruitmentManagementChoice; // lua chon quan ly ho so
+	int humanResourceManagementChoice; //Lua chon quan ly nhan su
+	int dataManagementAndReportingChoice; //Lua chon quan ly du lieu va bao cao
+	int employees = 20; // so luong nhan vien -> tang khi them nhan vien va giam khi sa thai nhan vien
+//	Employee listemp[100];
+	Employee *empList = (Employee*)malloc(size * sizeof(Employee)); // cap phat bo nho cho luon 20 nhan vien luc dau
+	TimeSheet *empTime = (TimeSheet*)malloc(MAX_TIME_EMP * sizeof(TimeSheet)); // cap phat cho Record TimeSheet 100 phan tu
+	if(empList == NULL){ 
+		printf("Loi Cap phat ! \n");
+	}else{
+		printf("Cap phat thanh cong ! \n");
+	}
+	// cho truoc 20 phan tu !!
+	empList[0] =  (Employee){"NV001","Song tong empity", "Quan Ly", 1600};
+	empList[1] =  (Employee){"NV002","SooBin Sam Son", "Quan Ly", 1000};
+	empList[2] =  (Employee){"NV003","Ngo Gia Tu", "Quan Ly", 1700};
+	empList[3] =  (Employee){"NV004","Sach Binh", "Quan Ly", 1700};
+	empList[4] =  (Employee){"NV005","Tan Thuy Hoang", "Quan Ly", 1400};
+	empList[5] =  (Employee){"NV006","Ca Ric", "Nhan Vien", 1000};
+	empList[6] =  (Employee){"NV007","Bell Gate", "Nhan Vien", 1100};
+	empList[7] =  (Employee){"NV008","Quy Buu Bach Khoa", "Nhan Vien", 1200};
+	empList[8] =  (Employee){"NV009","Binh Xang To", "Nhan Vien", 1400};
+	empList[9] =  (Employee){"NV010","Putin", "Nhan Vien", 1800};
+	empList[10] =  (Employee){"NV011","Ngan Chin Tam", "Nhan Vien", 1100};
+	empList[11] =  (Employee){"NV012","Hang Du Muc", "Nhan Vien", 1200};
+	empList[12] =  (Employee){"NV013","Quang Linh Vlogs", "Nhan Vien", 1800};
+	empList[13] =  (Employee){"NV014","Donal Trump", "Nhan Vien", 1800};
+	empList[14] =  (Employee){"NV015","Chu Be Te liet", "Nhan Vien", 1600};
+	empList[15] =  (Employee){"NV016","Vi Khuan", "Thuc Tap Sinh", 1200};
+	empList[16] =  (Employee){"NV017","Tra Bong", "Thuc tap sinh", 1300};
+	empList[17] =  (Employee){"NV018","Cau Banh", "Thuc tap sinh", 1900};
+	empList[18] =  (Employee){"NV019","Adolf Hitler", "Thuc tap sinh", 1000};
+	empList[19] =  (Employee){"NV020","Nguyen Minh Hien", "Chu Tich", 10000000};
+	do{
+		system("cls"); // xoa tat ca man hinh tren man hinh consol
+		printMenu();
+		valudateChoice(&choice);
+		switch (choice){
+			case 1 :{
+				do{
+					system("cls"); 
+					managementList();
+					valudateChoice(&choice);
+					switch (choice){
+						case 1 :
+							do{
+								profileManagementList();
+								valudateChoice(&recordAndRecruitmentManagementChoice);
+								switch (recordAndRecruitmentManagementChoice){
+									case 1 :{
+										insertEmployee(&empList, &size, &employees);
+										break;
+									}
+									case 2 : {
+										updateEmployee(empList, &size);
+										break;
+									}
+									case 3 : {
+										printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
+										sleep(1);
+										break;
+									}
+									default :
+										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
+								}
+							}while(recordAndRecruitmentManagementChoice != 3);
+							break;
+						 
+						case 2 :
+							do{
+								civilAdministrationList();
+								valudateChoice(&humanResourceManagementChoice);
+								switch (humanResourceManagementChoice){
+									case 1 :{
+										DismissEmployee(empList, &size, &employees);
+										break;
+									}
+									case 2 : {
+										printf("%s\t\t\t>>> hoat thanh cong\n%s", GREEN, RESET);
+										sleep(1);
+										break;
+									}
+									default :
+										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
+								}
+							}while(humanResourceManagementChoice != 2);
+							break;
+						
+						case 3 :
+							do{
+								dataManagementAndReportingList();
+								valudateChoice(&dataManagementAndReportingChoice);
+								switch (dataManagementAndReportingChoice){
+									case 1 :{
+										printEmployee(empList, &size, &employees);
+										break;
+									}
+									case 2 : {
+										findEmployeeByName(empList, &size);
+										break;
+									}
+									case 3 : {
+										sortBySalary(empList, &size, &choice, &employees);
+										break;
+									}
+									case 4 : {
+										printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
+										sleep(1);
+										break;
+									}
+									default :
+										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s",RED, RESET);
+								}
+							}while(dataManagementAndReportingChoice != 4);
+							break;
+						case 4 :
+							printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
+							sleep(1);
+							break;
+						default :
+							printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai !%s", RED, RESET);
+							sleep(1);
+					}
+				}while (choice != 4);
+				break;
+			}
+			case 2 :
+				do{
+					employeeList();
+					valudateChoice(&choice);
+					switch (choice){
+						case 1 : 
+							attendanceForTheDay(empList, empTime, &size, &sizeTime);
+							break;
+						case 2 :{
+							viewTheWorkSchedule(empList, empTime, &size, &sizeTime);
+							break;
+						}
+						case 3 :
+							printf("%s\t\t\t>>> Thoat thanh cong ! \n%s", GREEN, RESET);
+							sleep(1);
+							break;
+						default :
+							printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
+					}
+				}while(choice != 3);
+				break;
+			
+			case 3 :
+				free(empList);
+				free(empTime);
+				// mau me hoa la he :D
+				printf("\t\t\t%s>>> Cam on vi da xu dung chuong trinh !!!%s", RED, RESET);
+				sleep(1);
+				system("cls");
+				printf("%s\t\t\t\tDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEEEEE%s   %sMM M MM%s  %sOO  OO%s  %sNN N NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMM   MM%s  %sOO  OO%s  %sNN  NNN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				printf("%s\t\t\t\tDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
+				exit(0);
+				break;
+				
+			default :{
+				printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai !%s", RED, RESET);
+				sleep(1);
+			}
+		}
+	}while(1);
+	return 0;
+}
+
+
+// BAT DAU !!!
+// ----- THUC THI HAM ----
+			// Ham Bo Tro
 void removeBuffer(){
 	 int c;
 	 while((c = getchar()) != '\n' && c != EOF);
@@ -56,10 +287,6 @@ void removeNewLine(char *a){
 	 size_t len = strlen(a);
 	 a[len -1] = '\0';
 }
-// ham bi bo trong
-
-
-// ham phu tro
 
 // ham bien ky tu thanh in hoa het 
 void getToUpper(char *b, int size){
@@ -67,7 +294,7 @@ void getToUpper(char *b, int size){
 		b[i] = toupper(b[i]);
 	}
 }
-// ham di chuyen ky tu
+// ham xoa chuyen ky tu
 void deleteCharactor(char *string, int index){
 	int length = strlen(string);
 	for(int i = index; i < length - 1; i++){
@@ -146,11 +373,11 @@ int isDigitAndSpecial(char *b, int size){
 	}
 	return 0;
 }
+				// Ham Bo Tro
 
 
-// ham phu tro
 
-// ham dac biet
+				// Ham Dac Biet
 // ham bien doi ky tu dau thanh in hoa moi chu cai
 void inputToName(char *a, int size){
 	int appare = 0;
@@ -264,11 +491,11 @@ int validateDate(char *datePtr){
 	}
 	return 1;
 }
+		// Ham Dac Biet
 
 
-// ham dac biet
 
-// ham in an
+		// Ham In An
 // ham in ra ke vach
 void printLine(){
 	printf("%s+-------------------------------------------------------------------------------------------------------------------+%s\n",BRIGHT_BLUE, RESET);
@@ -339,10 +566,13 @@ void employeeList(){ // quan ly nhan vien
 	printf("\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "3. Quay lai",BRIGHT_CYAN, RESET);
 	printf("\t\t\t\t\t%s++========================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
-}
-//ham in an
+}			
+		// Ham In An
+		
+		
+		// HAM CHUC NANG !!!
+// bat dau lam ham
 
-// khai bao bien
 // ham tim Ma ID TUONG DOI
 int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr){
 	char findId[20]; 
@@ -370,20 +600,6 @@ int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targe
 	}
 	printf("\t\t\t%s++-------------------------------------------------------------------------------++%s\n",BRIGHT_BLUE, RESET);
 }
-
-
-
-void insertEmployee(Employee **empPtr, int *length, int *employee); 
-void printEmployee(Employee *empPtr, int *length, int *employee);
-void updateEmployee(Employee *empPtr, int *length);
-void DismissEmployee(Employee *empPtr, int *length, int *employee);
-void findEmployeeByName(Employee *empPtr, int *length);
-void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee);
-void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length , int *timeSheetLength);
-void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int *timeSheetLength);
-//khai bao bien
- 
-// bat dau lam ham
 /*
            F01: 
 chuc nang: Them nhan vien va so luong
@@ -973,182 +1189,8 @@ void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 		}
 	}
 }
-	
+		/// HAM CHUC NANG !!!
+		
+// KET THUC !!
 
-// ket thuc !!!
-int main(){
-	int size = 20; // kich co cung nhu so luong nhan vien luc dau luon !
-	int sizeTime = 0;  // kich cu cua Record -> se tang khi nhan vien cham cong
-	int choice; // lua chon khi moi vao Menu
-	int recordAndRecruitmentManagementChoice; // lua chon quan ly ho so
-	int humanResourceManagementChoice; //Lua chon quan ly nhan su
-	int dataManagementAndReportingChoice; //Lua chon quan ly du lieu va bao cao
-	int employees = 20; // so luong nhan vien -> tang khi them nhan vien va giam khi sa thai nhan vien
-//	Employee listemp[100];
-	Employee *empList = (Employee*)malloc(size * sizeof(Employee)); // cap phat bo nho cho luon 20 nhan vien luc dau
-	TimeSheet *empTime = (TimeSheet*)malloc(MAX_TIME_EMP * sizeof(TimeSheet)); // cap phat cho Record TimeSheet 100 phan tu
-	if(empList == NULL){ 
-		printf("Loi Cap phat ! \n");
-	}else{
-		printf("Cap phat thanh cong ! \n");
-	}
-	// cho truoc 20 phan tu !!
-	empList[0] =  (Employee){"NV001","Song tong empity", "Quan Ly", 1600};
-	empList[1] =  (Employee){"NV002","SooBin Sam Son", "Quan Ly", 1000};
-	empList[2] =  (Employee){"NV003","Ngo Gia Tu", "Quan Ly", 1700};
-	empList[3] =  (Employee){"NV004","Sach Binh", "Quan Ly", 1700};
-	empList[4] =  (Employee){"NV005","Tan Thuy Hoang", "Quan Ly", 1400};
-	empList[5] =  (Employee){"NV006","Ca Ric", "Nhan Vien", 1000};
-	empList[6] =  (Employee){"NV007","Bell Gate", "Nhan Vien", 1100};
-	empList[7] =  (Employee){"NV008","Quy Buu Bach Khoa", "Nhan Vien", 1200};
-	empList[8] =  (Employee){"NV009","Binh Xang To", "Nhan Vien", 1400};
-	empList[9] =  (Employee){"NV010","Putin", "Nhan Vien", 1800};
-	empList[10] =  (Employee){"NV011","Ngan Chin Tam", "Nhan Vien", 1100};
-	empList[11] =  (Employee){"NV012","Hang Du Muc", "Nhan Vien", 1200};
-	empList[12] =  (Employee){"NV013","Quang Linh Vlogs", "Nhan Vien", 1800};
-	empList[13] =  (Employee){"NV014","Donal Trump", "Nhan Vien", 1800};
-	empList[14] =  (Employee){"NV015","Chu Be Te liet", "Nhan Vien", 1600};
-	empList[15] =  (Employee){"NV016","Vi Khuan", "Thuc Tap Sinh", 1200};
-	empList[16] =  (Employee){"NV017","Tra Bong", "Thuc tap sinh", 1300};
-	empList[17] =  (Employee){"NV018","Cau Banh", "Thuc tap sinh", 1900};
-	empList[18] =  (Employee){"NV019","Adolf Hitler", "Thuc tap sinh", 1000};
-	empList[19] =  (Employee){"NV020","Nguyen Minh Hien", "Chu Tich", 10000000};
-	do{
-		system("cls"); // xoa tat ca man hinh tren man hinh consol
-		printMenu();
-		valudateChoice(&choice);
-		switch (choice){
-			case 1 :{
-				do{
-					system("cls"); 
-					managementList();
-					valudateChoice(&choice);
-					switch (choice){
-						case 1 :
-							do{
-								profileManagementList();
-								valudateChoice(&recordAndRecruitmentManagementChoice);
-								switch (recordAndRecruitmentManagementChoice){
-									case 1 :{
-										insertEmployee(&empList, &size, &employees);
-										break;
-									}
-									case 2 : {
-										updateEmployee(empList, &size);
-										break;
-									}
-									case 3 : {
-										printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
-										sleep(1);
-										break;
-									}
-									default :
-										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
-								}
-							}while(recordAndRecruitmentManagementChoice != 3);
-							break;
-						 
-						case 2 :
-							do{
-								civilAdministrationList();
-								valudateChoice(&humanResourceManagementChoice);
-								switch (humanResourceManagementChoice){
-									case 1 :{
-										DismissEmployee(empList, &size, &employees);
-										break;
-									}
-									case 2 : {
-										printf("%s\t\t\t>>> hoat thanh cong\n%s", GREEN, RESET);
-										sleep(1);
-										break;
-									}
-									default :
-										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
-								}
-							}while(humanResourceManagementChoice != 2);
-							break;
-						
-						case 3 :
-							do{
-								dataManagementAndReportingList();
-								valudateChoice(&dataManagementAndReportingChoice);
-								switch (dataManagementAndReportingChoice){
-									case 1 :{
-										printEmployee(empList, &size, &employees);
-										break;
-									}
-									case 2 : {
-										findEmployeeByName(empList, &size);
-										break;
-									}
-									case 3 : {
-										sortBySalary(empList, &size, &choice, &employees);
-										break;
-									}
-									case 4 : {
-										printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
-										sleep(1);
-										break;
-									}
-									default :
-										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s",RED, RESET);
-								}
-							}while(dataManagementAndReportingChoice != 4);
-							break;
-						case 4 :
-							printf("%s\t\t\t>>> Thoat thanh cong !\n%s", GREEN, RESET);
-							sleep(1);
-							break;
-						default :
-							printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai !%s", RED, RESET);
-							sleep(1);
-					}
-				}while (choice != 4);
-				break;
-			}
-			case 2 :
-				do{
-					employeeList();
-					valudateChoice(&choice);
-					switch (choice){
-						case 1 : 
-							attendanceForTheDay(empList, empTime, &size, &sizeTime);
-							break;
-						case 2 :{
-							viewTheWorkSchedule(empList, empTime, &size, &sizeTime);
-							break;
-						}
-						case 3 :
-							printf("%s\t\t\t>>> Thoat thanh cong ! \n%s", GREEN, RESET);
-							sleep(1);
-							break;
-						default :
-							printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
-					}
-				}while(choice != 3);
-				break;
-			
-			case 3 :
-				free(empList);
-				free(empTime);
-				// mau me hoa la he :D
-				printf("\t\t\t%s>>> Cam on vi da xu dung chuong trinh !!!%s", RED, RESET);
-				sleep(1);
-				system("cls");
-				printf("%s\t\t\t\tDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMMM MMM%s  %sOO  OO%s  %sNNN  NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%s\t\t\t\tDD   DD%s  %sEEEEE%s   %sMM M MM%s  %sOO  OO%s  %sNN N NN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%s\t\t\t\tDD   DD%s  %sEE%s      %sMM   MM%s  %sOO  OO%s  %sNN  NNN%s\n",RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				printf("%s\t\t\t\tDDDDDD%s   %sEEEEEE%s  %sMM   MM%s   %sOOOO%s   %sNN   NN%s\n", RED, RESET,YELLOW, RESET, GREEN, RESET, BRIGHT_MAGENTA, RESET,BRIGHT_BLUE, RESET );
-				exit(0);
-				break;
-				
-			default :{
-				printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai !%s", RED, RESET);
-				sleep(1);
-			}
-		}
-	}while(1);
-	return 0;
-}
+
