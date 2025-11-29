@@ -60,20 +60,21 @@ int hasLeadingOrTrailingSpace(char *s);
 void getToUpper(char *b, int size);
 void deleteCharactor(char *string, int index);
 void removeSpace (char *str);
+// ham phu tro
+
+// ham dac biet
 int onlySpace(char *str);
 void getString(char *c, int max, char *something);
 int isDigitAndSpecial(char *b, int size);
 int findCorrectID(Employee *empPtr, int *length);
 int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
-// ham phu tro
-
-// ham dac biet
 void inputToName(char *a, int size);
 void valudateChoice(int *choicePtr);
 void valudateSalary(double *choicePtr);
 int forSure(int choice, char *something);
 int validateDate(char *datePtr);
 int hasLeadingOrTrailingSpace(char *s);
+void validateCharractor(char *choiceMenuPtr);
 // ham dac biet
 
 // ham in an
@@ -98,10 +99,6 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length , i
 void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int *timeSheetLength);
 //khai bao bien
  
-
-
-
-
 // ket thuc !!!
 int main(){
 	int size = 20; // kich co cung nhu so luong nhan vien luc dau luon !
@@ -280,12 +277,6 @@ int main(){
 	return 0;
 }
 
-
-
-
-
-
-
 // BAT DAU !!!
 // ----- THUC THI HAM ----
 			// Ham Bo Tro
@@ -348,9 +339,7 @@ void getString(char *c, int max, char *something){
 		
 		printf("%s%s (max %d ky tu): %s",BRIGHT_YELLOW ,something, max - 1, RESET);
 		printf("%s", GREEN);
-		if(fgets(c, max, stdin) == NULL){
-			printf("Loi Tran Bo Nho hoac EOF ! \n");
-		}
+		fgets(c, max, stdin);
 		printf("%s", RESET);
 		
 		sizeIndex = strcspn(c, "\n");
@@ -381,7 +370,6 @@ void getString(char *c, int max, char *something){
 		}
 	}while(1);
 }
-
 // tim gia tri ID chinh xac va Luu lai bien cua Index
 int findCorrectID(Employee *empPtr, int *length){
 	int targetIndex;
@@ -398,8 +386,6 @@ int findCorrectID(Employee *empPtr, int *length){
 			}
 	return targetIndex;
 }
-
-
 // ham xac dinh trong co ky tu so hay ky tu dac biet nao khong
 int isDigitAndSpecial(char *b, int size){
 	for(int i = 0; i < size; i++){
@@ -544,6 +530,36 @@ int validateDate(char *datePtr){
 		}
 	}
 	return 1;
+
+}
+// Validate khi nhap chu cai o phan printEmployyee !
+void validateCharractor(char *choiceMenuPtr){
+	char input[100];
+do{
+	printf("\t\t\tVui long nhap lua chon cua ban: ");
+    printf("%s", GREEN);
+    fgets(input, sizeof(input), stdin);
+    printf("%s", RESET);
+    removeNewLine(input);
+    
+    if(strlen(input) == 0){
+        printf("%sERROR !! Khong duoc de trong !%s\n", RED, RESET);
+        continue;
+    }
+
+    if(strlen(input) != 1){
+        printf("%sERROR !! Vui long chi nhap 1 ky tu !%s\n", RED, RESET);
+        continue;
+    }
+
+    (*choiceMenuPtr) = input[0];
+
+    if(strchr("qQwWeEgGsS", *choiceMenuPtr)){
+        break; 
+    } else {
+        printf("%sERROR !! Lua chon khong hop le!%s\n", RED, RESET);
+    }
+}while(1);
 }
 		// Ham Dac Biet
 
@@ -659,7 +675,6 @@ int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targe
 chuc nang: Them nhan vien va so luong
 Yeu cau: Bat nhung truong hop nhap het loi
 */ 
-
 void insertEmployee(Employee **empPtr, int *length, int *employee){
 	int index;
 	int currentIndex = *length;
@@ -710,8 +725,6 @@ void insertEmployee(Employee **empPtr, int *length, int *employee){
 					strcpy((*empPtr)[currentIndex + i].empId,nameIdUnique);
 					break;	
 				}
-				
-				
 			}while(1);
 			
 			
@@ -760,7 +773,6 @@ Yeu cau: Nghi nhung cach nguoi dung de xem cho no tien loi
 */ 
 void printEmployee(Employee *empPtr, int *length, int *employee){
 	int totalEmployees = (*length);
-	int choice;
 	char choiceMenu;
 	int empPerPage = 5;
 	int page = 0;
@@ -811,12 +823,7 @@ void printEmployee(Employee *empPtr, int *length, int *employee){
     		printf("\t\t\t%s++--------------------------+------------------------------+---------------------++%s\n", RED, RESET);
     		printf("\t\t\t%s||%s                                  s. So luong                                  %s||%s\n", RED, RESET, RED, RESET);
     		printf("\t\t\t%s++===============================================================================++%s\n", RED, RESET);
-    		printf("\t\t\tVui long nhap lua chon cua ban: ");
-    		
-    			printf("%s", GREEN);
-    			scanf("%c",&choiceMenu);
-    			printf("%s", RESET);
-    			while(getchar() != '\n');
+    			validateCharractor(&choiceMenu);
     			switch (choiceMenu){
     				case 'q' : case 'Q' : 
     					if(page >= 1){
