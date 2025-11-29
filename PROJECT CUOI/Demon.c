@@ -56,12 +56,15 @@ void removeNewLine(char *a);
 
 
 // ham phu tro
+int hasLeadingOrTrailingSpace(char *s);
 void getToUpper(char *b, int size);
 void deleteCharactor(char *string, int index);
 void removeSpace (char *str);
 int onlySpace(char *str);
 void getString(char *c, int max, char *something);
 int isDigitAndSpecial(char *b, int size);
+int findCorrectID(Employee *empPtr, int *length);
+int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
 // ham phu tro
 
 // ham dac biet
@@ -70,6 +73,7 @@ void valudateChoice(int *choicePtr);
 void valudateSalary(double *choicePtr);
 int forSure(int choice, char *something);
 int validateDate(char *datePtr);
+int hasLeadingOrTrailingSpace(char *s);
 // ham dac biet
 
 // ham in an
@@ -84,7 +88,6 @@ void employeeList();
 //ham in an
 
 // khai bao bien
-int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
 void insertEmployee(Employee **empPtr, int *length, int *employee); 
 void printEmployee(Employee *empPtr, int *length, int *employee);
 void updateEmployee(Employee *empPtr, int *length);
@@ -95,6 +98,9 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length , i
 void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int *timeSheetLength);
 //khai bao bien
  
+
+
+
 
 // ket thuc !!!
 int main(){
@@ -275,6 +281,11 @@ int main(){
 }
 
 
+
+
+
+
+
 // BAT DAU !!!
 // ----- THUC THI HAM ----
 			// Ham Bo Tro
@@ -320,6 +331,14 @@ int onlySpace(char *str){
 	return 0;
 	
 }
+// kiem tra dau va cuoi co dau  ' ' hay khong  ! 
+int hasLeadingOrTrailingSpace(char *s) {
+    int len = strlen(s);
+    if (len == 0) return 0;
+
+    return isspace(s[0]) || 
+           isspace(s[len - 1]);
+}
 // ham lay ky tu va Validate o ben trong
 void getString(char *c, int max, char *something){
 	int sizeOfString;
@@ -355,11 +374,32 @@ void getString(char *c, int max, char *something){
 			printf("%sERROR !!\nVui long nhap lai! \n%s", RED, RESET);
 		}else if(onlySpace(c)){
 			printf("%sERROR !! Khong duoc chua dau cach va khong duoc bo trong !\n%s", RED, RESET);
+		}else if(hasLeadingOrTrailingSpace(c)){
+			printf("%sERROR !!Co dau cach ! vui long nhap lai ! %s\n", RED, RESET);
 		}else{
 			break;
 		}
 	}while(1);
 }
+
+// tim gia tri ID chinh xac va Luu lai bien cua Index
+int findCorrectID(Employee *empPtr, int *length){
+	int targetIndex;
+	char findNewID[20];
+	do{
+		getString(findNewID, 21,"Vui long nhap ID CHINH XAC ma ban can cap nhap"  );
+	}while((int)strlen(findNewID) > 20);
+			targetIndex = - 1;
+			for(int i = 0; i  < *length; i++){
+				if(strcmp(empPtr[i].empId, findNewID) == 0){
+						targetIndex = i;
+						break;
+				}
+			}
+	return targetIndex;
+}
+
+
 // ham xac dinh trong co ky tu so hay ky tu dac biet nao khong
 int isDigitAndSpecial(char *b, int size){
 	for(int i = 0; i < size; i++){
@@ -405,7 +445,7 @@ void valudateChoice(int *choicePtr){
 		sizeOfString  =strlen(input);
 		input[strcspn(input, "\n")]= '\0';
 		if(strlen(input) == 0){
-			printf("%sDau vao khong duoc de trong ! \nVui long nhap lai: %s", RED, RESET);
+			printf("%sERROR !! khong duoc de trong ! \nVui long nhap lai: %s", RED, RESET);
 			continue;
 		}
 			isSpace = 0;
@@ -416,7 +456,7 @@ void valudateChoice(int *choicePtr){
 				}
 			}
 			if(isSpace){
-				printf("%sDau vao khong duoc co dau cach ! \nVui long nhap lai: %s", RED, RESET);
+				printf("%sERROR !! khong duoc co dau cach ! \nVui long nhap lai: %s", RED, RESET);
 				continue;
 			}
 		char *endPtr;
@@ -426,7 +466,7 @@ void valudateChoice(int *choicePtr){
 			*choicePtr = (int)temp;
 			 validate = 1;
 		}else{
-			printf("%sVui long chi nhap so ! \nVui long nhap lai: %s",RED, RESET);
+			printf("%sERROR !! Vui long chi nhap so ! \nVui long nhap lai: %s",RED, RESET);
 		}
 	}while(!validate);
 }
@@ -434,15 +474,31 @@ void valudateChoice(int *choicePtr){
 void valudateSalary(double *choicePtr){
 	char input[100];
 	int validate = 0;
+	int isSpace;
+	int sizeOfString;
 	do{
 		printf("%s", GREEN);
 		fgets(input, 100, stdin);
 		printf("%s", RESET);
+		sizeOfString = (int)strlen(input);
 		input[strcspn(input, "\n")]= '\0';
 		if(strlen(input) == 0){
 			printf("%sDau vao khong duoc de trong ! \nVui long nhap lai: %s",RED, RESET);
 			continue;
 		}
+		isSpace = 0;
+			for(int i = 0; i <sizeOfString; i++){
+				if(isspace(input[i])){
+					isSpace = 1;
+					break;
+				}
+			}
+			if(isSpace){
+				printf("%sERROR !! khong duoc co dau cach hay khong duoc co chu !!! \nVui long nhap lai: %s", RED, RESET);
+				continue;
+			}
+		
+		
 		char *endPtr;
 		double temp = strtod(input, &endPtr);
 		// cu phap strtol(bien can bien thanh kieu long, con tro khi chay chuoi (Aka: duyet phan tu ), He co so)
@@ -477,9 +533,7 @@ int validateDate(char *datePtr){
 	if(year > 2100 || year < 1900){
 		printf("%sVui long chon nam hop le (1900 => 2100)! %s\n", RED, RESET);
 		return 0;
-	}
-	
-	
+	}	
 	if(month < 1 || month > 12 ||day < 1 || day > 31){
 		return 0;
 	}else{
@@ -560,9 +614,9 @@ void dataManagementAndReportingList(){  // quan ly du lieu va bao cao
 	
 }
 void employeeList(){ // quan ly nhan vien
-	printf("%s\n\\t\t\t\t\t++=====MENU NHAN VIEN=====++%s\n",BRIGHT_CYAN, RESET);
+	printf("%s\n\t\t\t\t\t++=====MENU NHAN VIEN=====++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "1. Cham cong",BRIGHT_CYAN, RESET);
-	printf("\\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "2. Bang cham cong",BRIGHT_CYAN, RESET);
+	printf("\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "2. Bang cham cong",BRIGHT_CYAN, RESET);
 	printf("\t\t\t\t\t%s||%s%-22s  %s||%s\n",BRIGHT_CYAN, RESET, "3. Quay lai",BRIGHT_CYAN, RESET);
 	printf("\t\t\t\t\t%s++========================++%s\n",BRIGHT_CYAN, RESET);
 	printf("\t\t\t%s>>> Lua chon cua ban: %s", BRIGHT_CYAN, RESET);
@@ -656,6 +710,8 @@ void insertEmployee(Employee **empPtr, int *length, int *employee){
 					strcpy((*empPtr)[currentIndex + i].empId,nameIdUnique);
 					break;	
 				}
+				
+				
 			}while(1);
 			
 			
@@ -819,7 +875,6 @@ void updateEmployee(Employee *empPtr, int *length){
 	// mang tim kiem 
 	int insideIndex = 0;
 	int targetIndex;
-	char findNewID[20];
 	char newPosition[16];
 	double newBaseSalary;
 	// mang tim kiem
@@ -865,21 +920,7 @@ void updateEmployee(Employee *empPtr, int *length){
 			
 	}else{
 		// neu nhieu hon 1 nhan vien 
-			do{
-				getString(findNewID, 21,"Vui long nhap ID CHINH XAC ma ban can cap nhap"  );
-				size = (int)strlen(findNewID);
-				if(size > 10){
-					printf("%sERROR !! Ma ID khong Hop Le !\n%s"RED, RESET);
-				}
-			}while(size > 10);
-
-			targetIndex = - 1;
-			for(int i = 0; i  < *length; i++){
-				if(strcmp(empPtr[i].empId, findNewID) == 0){
-						targetIndex = i;
-						break;
-				}
-			}
+			targetIndex = findCorrectID(empPtr, length);
 			if(targetIndex != -1){
 				do{
 				getString(newPosition, 16, "Vui long nhap vi tri moi cua ban");
@@ -909,7 +950,7 @@ void updateEmployee(Employee *empPtr, int *length){
 					printf("%sCap nhap khong thanh cong ! \n%s", RED, RESET); // thong bao fail
 				}
 			}else{
-				printf("%sMa ID %s khong tim thay trong danh sach ! \n%s",RED,findNewID, RESET); // kiem tra neu nguoi dung nhap khong thay ma
+				printf("%sMa ID khong tim thay trong danh sach ! \n%s",RED, RESET); // kiem tra neu nguoi dung nhap khong thay ma
 			}
 		}
 	}
@@ -921,58 +962,51 @@ chuc nang: Xoa nhan vien Theo Ma ID
 Yeu cau: Bat nhung truong hop nhap loi
 */ 
 void DismissEmployee(Employee *empPtr, int *length, int *employee){
-	int size;
 	int choice;
 	// mang tim kiem 
 	int insideIndex = 0;
 	int targetIndex;
-	char findNewID[20];
 	// mang tim kiem
 	if((*length) == 0){
 		printf("%s>>> Khong co nhan vien de Xoa ! \n%s", RED, RESET);
 	}else{
-	findSomethingSameSame(empPtr, length,&insideIndex,&targetIndex);
-// in ra cac nhan vien da duoc tra cuu	
-// lua chon ma nhan vien CHINH XAC ma can duoc xoa !
-	if(insideIndex == 0){
-		printf("%s\t\t\t>>> Khong co <<< \n%s", RED, RESET);
-		return;
-	}else if(insideIndex == 1){
-			strcpy(findNewID, empPtr[targetIndex].empId);
-	}else{
-			do{
-				getString(findNewID, 21,"Vui long nhap ID CHINH XAC ma ban can xoa"  );
-				size = (int)strlen(findNewID);
-				if(size > 20){
-					printf("%sERROR !! Ma ID khong Hop Le !\n%s", RED, RESET);
+		findSomethingSameSame(empPtr, length,&insideIndex,&targetIndex);
+	// in ra cac nhan vien da duoc tra cuu	
+	// lua chon ma nhan vien CHINH XAC ma can duoc xoa !
+		if(insideIndex == 0){
+			printf("%s\t\t\t>>> Khong co <<< \n%s", RED, RESET);
+			return;
+		}else if(insideIndex == 1){
+				choice = forSure(choice, "Xoa");
+				if(choice){
+						for(int j =targetIndex; j < (*length) -1 ;j++){
+							empPtr[j] = empPtr[j+1];
+						}
+						(*length)--;
+						(*employee)--;
+						printf("%sXoa thanh cong ! \n%s", GREEN, RESET);
+				}else{
+					printf("%sXoa khong thanh cong !\n%s", RED, RESET);
 				}
-			}while(size > 20);
-		
+		}else{
+			targetIndex = findCorrectID(empPtr, length);
+			if(targetIndex == -1){
+				printf("%skhong tim thay Ma ID trong danh sach ! \n%s",RED, RESET);
+				return ;
 			}
 			choice = forSure(choice, "Xoa");
-			if(choice){
-				targetIndex = -1;
-				for(int i = 0; i  < *length; i++){
-					if(strcmp(empPtr[i].empId, findNewID) == 0){
-							targetIndex = i;
-							break;
-					}
-				}
-				if(targetIndex != -1){
-					for(int j =targetIndex; j < (*length) -1 ;j++){
-						empPtr[j] = empPtr[j+1];
-					}
-					(*length)--;
-					(*employee)--;
-					printf("%sXoa thanh cong ! \n%s", GREEN, RESET);
+				if(choice){
+						for(int j =targetIndex; j < (*length) -1 ;j++){
+							empPtr[j] = empPtr[j+1];
+						}
+						(*length)--;
+						(*employee)--;
+						printf("%sXoa thanh cong ! \n%s", GREEN, RESET);
 				}else{
-					printf("%sMa ID %s khong tim thay trong danh sach ! \n%s",RED,findNewID, RESET);
-				}
-			}else{
-				printf("%sXoa khong thanh cong !%s", RED, RESET);
+					printf("%sXoa khong thanh cong !%s", RED, RESET);
 			}	
+		}
 	}
-	
 }
 /*
            F05: 
@@ -992,7 +1026,6 @@ void findEmployeeByName(Employee *empPtr, int *length){
 				printf("%sERROR !! Vui Long Nhap Ten Ma khong co so va khong co ky tu dac biet !\n%s", RED, RESET);
 				
 			}else{
-//				inputToName(findName, size);
 				break;
 			}
 		}while(1);
@@ -1085,6 +1118,7 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 	// mang tim kiem 
 	int insideIndex = 0; 
 	int targetIndex = -1;
+	int size;
 	char finalId[20];
 	// mang tim kiem
 	if((*length) == 0){
@@ -1114,14 +1148,7 @@ void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 
 	}else{
 		// neu nhieu hon 1 nhan vien 
-		getString(finalId, 21, "Vui long nhap ID CHINH XAC ma ban can cap nhap" );
-		targetIndex = - 1;
-		for(int i = 0; i  < *length; i++){
-			if(strcmp(empPtr[i].empId, finalId) == 0){
-					targetIndex = i;
-					break;
-			}
-		}
+		targetIndex = findCorrectID(empPtr, length);
 		if(targetIndex == -1){
 			printf("%sERROR !! Khong tim thay ma %s trong danh sach !\n%s", RED, RESET);
 			return ;
@@ -1192,5 +1219,3 @@ void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 		/// HAM CHUC NANG !!!
 		
 // KET THUC !!
-
-
