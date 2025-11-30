@@ -52,13 +52,13 @@ typedef struct{
 // ham bi bo trong
 void removeBuffer();
 void removeNewLine(char *a);
+void getToUpper(char *b, int size);
 // ham bi bo trong
 
 
 // ham phu tro
 int hasLeadingOrTrailingSpace(char *s);
-void getToUpper(char *b, int size);
-void deleteCharactor(char *string, int index);
+void deleteCharactor(char *string, int index); 
 void removeSpace (char *str);
 // ham phu tro
 
@@ -68,13 +68,12 @@ void getString(char *c, int max, char *something);
 int isDigitAndSpecial(char *b, int size);
 int findCorrectID(Employee *empPtr, int *length);
 int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
-void inputToName(char *a, int size);
-void valudateChoice(int *choicePtr);
-void valudateSalary(double *choicePtr);
-int forSure(int choice, char *something);
-int validateDate(char *datePtr);
-int hasLeadingOrTrailingSpace(char *s);
-void validateCharractor(char *choiceMenuPtr);
+void inputToName(char *a, int size);  // nguyen van a  -> Nguyen Van A
+void valudateChoice(int *choicePtr);  //   1 - 1abc
+void valudateSalary(double *choicePtr);  
+int forSure(int choice, char *something); 
+int validateDate(char *datePtr); 
+void validateCharractor(char *choiceMenuPtr); // ký tu 
 // ham dac biet
 
 // ham in an
@@ -108,7 +107,6 @@ int main(){
 	int humanResourceManagementChoice; //Lua chon quan ly nhan su
 	int dataManagementAndReportingChoice; //Lua chon quan ly du lieu va bao cao
 	int employees = 20; // so luong nhan vien -> tang khi them nhan vien va giam khi sa thai nhan vien
-//	Employee listemp[100];
 	Employee *empList = (Employee*)malloc(size * sizeof(Employee)); // cap phat bo nho cho luon 20 nhan vien luc dau
 	TimeSheet *empTime = (TimeSheet*)malloc(MAX_TIME_EMP * sizeof(TimeSheet)); // cap phat cho Record TimeSheet 100 phan tu
 	if(empList == NULL){ 
@@ -655,7 +653,7 @@ int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targe
 	for(int i = 0; i  < *length; i++){
 		if(strstr(empPtr[i].empId, findId) != NULL){
 			listFind[(*inSide)] = empPtr[i];
-			(*targetIndexPtr) = i;
+			(*targetIndexPtr) = i;  // luu mot ID neu co 1 nhan vien
 			(*inSide)++;
 		}
 	}
@@ -727,7 +725,6 @@ void insertEmployee(Employee **empPtr, int *length, int *employee){
 				}
 			}while(1);
 			
-			
 			do{
 				getString((*empPtr)[currentIndex + i].nameEmp, 51, "Vui long nhap ten cua nhan vien");
 				size = strlen(((*empPtr)[currentIndex + i].nameEmp));
@@ -749,7 +746,7 @@ void insertEmployee(Employee **empPtr, int *length, int *employee){
 						}
 				}while(1);
 				
-				
+
 				printf("%sNhap luong cua nhan vien: %s",BRIGHT_YELLOW, RESET);
 			do{
 					valudateSalary(&(*empPtr)[currentIndex + i].baseSalary);
@@ -906,8 +903,7 @@ void updateEmployee(Employee *empPtr, int *length){
 						break;
 					}
 			}while(1);
-			
-			
+
 			printf("%sVui long nhap luong moi: %s", BRIGHT_YELLOW, RESET);
 			do{
 				valudateSalary(&newBaseSalary);
@@ -1112,6 +1108,7 @@ void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee){
 	}
 
 }
+
 /*
            F07: 
 chuc nang: Cham cong cho nhan vien bang ma id // hoac ten (neu duoc yeu cau ) !
