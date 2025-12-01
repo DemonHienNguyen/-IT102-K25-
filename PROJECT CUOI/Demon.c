@@ -57,22 +57,21 @@ void getToUpper(char *b, int size);
 
 
 // ham phu tro
-int hasLeadingOrTrailingSpace(char *s);
-void deleteCharactor(char *string, int index); 
-void removeSpace (char *str);
+int hasLeadingOrTrailingSpace(char *s); // kiem tra neu co cach o truoc va sau hay khong ?
+void trimSpace(char *str);  // ham xoa dau cach ca truoc va sau
+int onlySpace(char *str);	// su dung ham void trimSpace neu nhu co dau cach va tra gia tri 0 / 1 
+int isDigitAndSpecial(char *b, int size);
+void inputToName(char *a, int size);  // nguyen van a  -> Nguyen Van A
+int forSure(int choice, char *something); 
 // ham phu tro
 
 // ham dac biet
-int onlySpace(char *str);
 void getString(char *c, int max, char *something);
-int isDigitAndSpecial(char *b, int size);
 int findCorrectID(Employee *empPtr, int *length);
 int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
-void inputToName(char *a, int size);  // nguyen van a  -> Nguyen Van A
 void valudateChoice(int *choicePtr);  //   1 - 1abc
 void valudateSalary(double *choicePtr);  
-int forSure(int choice, char *something); 
-int validateDate(char *datePtr); 
+int validateDate(char *datePtr);  // Ngay/Thang/Nam
 void validateCharractor(char *choiceMenuPtr); // ký tu 
 // ham dac biet
 
@@ -252,7 +251,6 @@ int main(){
 			
 			case 3 :
 				free(empList);
-				free(empTime);
 				// mau me hoa la he :D
 				printf("\t\t\t%s>>> Cam on vi da xu dung chuong trinh !!!%s", RED, RESET);
 				sleep(1);
@@ -294,26 +292,28 @@ void getToUpper(char *b, int size){
 		b[i] = toupper(b[i]);
 	}
 }
-// ham xoa chuyen ky tu
-void deleteCharactor(char *string, int index){
-	int length = strlen(string);
-	for(int i = index; i < length - 1; i++){
-		string[i] = string[i+1];
+// Xoa het ky tu cach va Dich chuyen ky tu len truoc
+void trimSpace(char *str) {
+    int start = 0;
+    int end = strlen(str) - 1;
+    while (isspace(str[start])){
+    	start++;
 	}
-	string[length-1] = '\0';
+    while (end >= start && isspace(str[end])){
+    	end--;
+	} 
+    int j = 0;
+    for (int i = start; i <= end; i++) {
+        str[j++] = str[i];
+    }
+    str[j] = '\0';
 }
-// ham xoa dau cach
-void removeSpace (char *str){
-	int index = 0;
-	while(str[index] == ' '){
-		deleteCharactor(str, index);
-	}
-}
+
 // ham xac dinh co dau cach
 int onlySpace(char *str){
 	char temp[100];
 	strcpy(temp, str);
-	removeSpace(temp);
+	trimSpace(temp);
 	if(strlen(temp) == 0){
 		return 1;
 	}
@@ -323,12 +323,13 @@ int onlySpace(char *str){
 // kiem tra dau va cuoi co dau  ' ' hay khong  ! 
 int hasLeadingOrTrailingSpace(char *s) {
     int len = strlen(s);
-    if (len == 0) return 0;
-
+    if (len == 0){
+    	return 0;
+	}
     return isspace(s[0]) || 
            isspace(s[len - 1]);
 }
-// ham lay ky tu va Validate o ben trong
+// ham lay Chuoi Ky tu va Validate o ben trong
 void getString(char *c, int max, char *something){
 	int sizeOfString;
 	int sizeIndex;
@@ -432,14 +433,7 @@ void valudateChoice(int *choicePtr){
 			printf("%sERROR !! khong duoc de trong ! \nVui long nhap lai: %s", RED, RESET);
 			continue;
 		}
-			isSpace = 0;
-			for(int i = 0; i <sizeOfString; i++){
-				if(isspace(input[i])){
-					isSpace = 1;
-					break;
-				}
-			}
-			if(isSpace){
+			if(hasLeadingOrTrailingSpace(input)){
 				printf("%sERROR !! khong duoc co dau cach ! \nVui long nhap lai: %s", RED, RESET);
 				continue;
 			}
@@ -470,19 +464,10 @@ void valudateSalary(double *choicePtr){
 			printf("%sDau vao khong duoc de trong ! \nVui long nhap lai: %s",RED, RESET);
 			continue;
 		}
-		isSpace = 0;
-			for(int i = 0; i <sizeOfString; i++){
-				if(isspace(input[i])){
-					isSpace = 1;
-					break;
-				}
-			}
-			if(isSpace){
-				printf("%sERROR !! khong duoc co dau cach hay khong duoc co chu !!! \nVui long nhap lai: %s", RED, RESET);
-				continue;
-			}
-		
-		
+		if(hasLeadingOrTrailingSpace(input)){
+			printf("%sERROR !! khong duoc co dau cach!!! \nVui long nhap lai: %s", RED, RESET);
+			continue;
+		}
 		char *endPtr;
 		double temp = strtod(input, &endPtr);
 		// cu phap strtol(bien can bien thanh kieu long, con tro khi chay chuoi (Aka: duyet phan tu ), He co so)
@@ -490,7 +475,7 @@ void valudateSalary(double *choicePtr){
 			*choicePtr = temp;
 			 validate = 1;
 		}else{
-			printf("%sVui long chi nhap so thap phan ! \nVui long nhap lai: %s",RED, RESET);
+			printf("%sVui long chi nhap so thap phan, khong duoc co chu ! \nVui long nhap lai: %s",RED, RESET);
 		}
 	}while(!validate);
 }
@@ -552,9 +537,9 @@ do{
 
     (*choiceMenuPtr) = input[0];
 
-    if(strchr("qQwWeEgGsS", *choiceMenuPtr)){
+    if(strchr("qQwWeEgGsS", *choiceMenuPtr)){ // tra ve vi tri con tro duoc tim thay -> True, neu khong tim thay = NULL -> False
         break; 
-    } else {
+    }else {
         printf("%sERROR !! Lua chon khong hop le!%s\n", RED, RESET);
     }
 }while(1);
