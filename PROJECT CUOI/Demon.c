@@ -1,11 +1,11 @@
-#include <stdio.h> // dung cho cac ham nhap -> xuat: printf(), fgets, scanf.  
-#include <stdlib.h> // dung ham cho exit(0), system("cls").
-#include <string.h>	// dung ham cho strtol, strtod, sscanf().
-#include <ctype.h> // ham dung cho isspace , isalpha, isdigit.
-#include <unistd.h> // ham dung cho:  sleep(int).
+#include <stdio.h> 								// dung cho cac ham nhap -> xuat: printf(), fgets, scanf.  
+#include <stdlib.h> 							// dung ham cho exit(0), system("cls").
+#include <string.h>								// dung ham cho strtol, strtod, sscanf().
+#include <ctype.h> 								// ham dung cho isspace , isalpha, isdigit.
+#include <unistd.h> 							// ham dung cho:  sleep(int).
 
-#define EMP_PER_PAGE 5 // so luong nhan vien toi da moi trang - > co the thay doi lai duoc
-#define MAX_TIME_EMP 100 // so luong thoi gian Record toi da : 100 phan tu
+#define EMP_PER_PAGE 5 							// so luong nhan vien toi da moi trang - > co the thay doi lai duoc
+#define MAX_TIME_EMP 100 						// so luong thoi gian Record toi da : 100 phan tu
 
 							// BANG MAU
 							/* ===========================
@@ -33,20 +33,20 @@
 							#define BRIGHT_MAGENTA "\033[95m"
 							#define BRIGHT_CYAN    "\033[96m"
 							#define BRIGHT_WHITE   "\033[97m"
-							// BANG MAU
+												// BANG MAU
 typedef struct{
-	char empId[20];  // id cua nhan vien
-	char nameEmp[50]; // ten nhan vien
-	char position[15]; // chuc vu nhan vien
-	double baseSalary; // luong co ban
-	int workDay; // ngay cong tinh tu ( 0 )
+	char empId[20];  							// id cua nhan vien
+	char nameEmp[50]; 							// ten nhan vien
+	char position[15]; 							// chuc vu nhan vien
+	double baseSalary; 							// luong co ban
+	int workDay;								// ngay cong tinh tu ( 0 )
 }Employee;
 
 typedef struct{
-	char logId[20]; // Mã giao dich / nhat ky (Sinh ngau nhiên hoac tu tang). 
-	char empId[20]; // ma tai khoan nhan vien
-	char date[20]; //ngay cham cong (ví d?: "DD/MM/YYYY").
-	char status[10]; //loai cham cong (Ví d?: "Ði làm", "Nghi").
+	char logId[20]; 							// Mã giao dich / nhat ky (Sinh ngau nhiên hoac tu tang). 
+	char empId[20]; 							// ma tai khoan nhan vien
+	char date[20]; 								//ngay cham cong (ví d?: "DD/MM/YYYY").
+	char status[10]; 							//loai cham cong (Ví d?: "Ði làm", "Nghi").
 }TimeSheet;
 
 // ham bi bo trong
@@ -57,11 +57,11 @@ void getToUpper(char *b, int size);
 
 
 // ham phu tro
-int hasLeadingOrTrailingSpace(char *s); // kiem tra neu co cach o truoc va sau hay khong ?
-void trimSpace(char *str);  // ham xoa dau cach ca truoc va sau
-int onlySpace(char *str);	// su dung ham void trimSpace neu nhu co dau cach va tra gia tri 0 / 1 
+int hasLeadingOrTrailingSpace(char *s); 		// kiem tra neu co cach o truoc va sau hay khong ?
+void trimSpace(char *str);  					// ham xoa dau cach ca truoc va sau
+int onlySpace(char *str);						// su dung ham void trimSpace neu nhu co dau cach va tra gia tri 0 / 1 
 int isDigitAndSpecial(char *b, int size);
-void inputToName(char *a, int size);  // nguyen van a  -> Nguyen Van A
+void inputToName(char *a, int size);  			// nguyen van a  -> Nguyen Van A
 int forSure(int choice, char *something); 
 // ham phu tro
 
@@ -69,10 +69,10 @@ int forSure(int choice, char *something);
 void getString(char *c, int max, char *something);
 int findCorrectID(Employee *empPtr, int *length);
 int findSomethingSameSame(Employee *empPtr, int *length, int *inSide, int *targetIndexPtr);
-void valudateChoice(int *choicePtr);  //   1 - 1abc
+void valudateChoice(int *choicePtr);  			//   1 - 1abc
 void valudateSalary(double *choicePtr);  
-int validateDate(char *datePtr);  // Ngay/Thang/Nam
-void validateCharractor(char *choiceMenuPtr); // ký tu 
+int validateDate(char *datePtr); 		 		// Ngay/Thang/Nam
+void validateCharractor(char *choiceMenuPtr); 	// ký tu 
 // ham dac biet
 
 // ham in an
@@ -99,13 +99,13 @@ void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
  
 // ket thuc !!!
 int main(){
-	int size = 20; // kich co cung nhu so luong nhan vien luc dau luon !
-	int logCount  = 0;  // kich cu cua Record -> se tang khi nhan vien cham cong
-	int choice; // lua chon khi moi vao Menu
-	int recordAndRecruitmentManagementChoice; // lua chon quan ly ho so
-	int humanResourceManagementChoice; //Lua chon quan ly nhan su
-	int dataManagementAndReportingChoice; //Lua chon quan ly du lieu va bao cao
-	int employees = 20; // so luong nhan vien -> tang khi them nhan vien va giam khi sa thai nhan vien
+	int size = 20; 								// kich co cung nhu so luong nhan vien luc dau luon !
+	int logCount  = 0;  						// kich cu cua Record -> se tang khi nhan vien cham cong
+	int choice; 								// lua chon khi moi vao Menu
+	int recordAndRecruitmentManagementChoice; 	// lua chon quan ly ho so
+	int humanResourceManagementChoice; 			//Lua chon quan ly nhan su
+	int dataManagementAndReportingChoice; 		//Lua chon quan ly du lieu va bao cao
+	int employees = 20; 						// so luong nhan vien -> tang khi them nhan vien va giam khi sa thai nhan vien
 	Employee *empList = (Employee*)malloc(size * sizeof(Employee)); // cap phat bo nho cho luon 20 nhan vien luc dau
 	TimeSheet *empTime = (TimeSheet*)malloc(MAX_TIME_EMP * sizeof(TimeSheet)); // cap phat cho Record TimeSheet 100 phan tu
 	if(empList == NULL){ 
@@ -113,7 +113,7 @@ int main(){
 	}else{
 		printf("Cap phat thanh cong ! \n");
 	}
-	// cho truoc 20 phan tu !!
+												// cho truoc 20 phan tu !!
 	empList[0] =  (Employee){"NV001","Song tong empity", "Quan Ly", 1600};
 	empList[1] =  (Employee){"NV002","SooBin Sam Son", "Quan Ly", 1000};
 	empList[2] =  (Employee){"NV003","Ngo Gia Tu", "Quan Ly", 1700};
@@ -135,7 +135,7 @@ int main(){
 	empList[18] =  (Employee){"NV019","Adolf Hitler", "Thuc tap sinh", 1000};
 	empList[19] =  (Employee){"NV020","Nguyen Minh Hien", "Chu Tich", 10000000};
 	do{
-		system("cls"); // xoa tat ca man hinh tren man hinh consol
+		system("cls"); 							// xoa tat ca man hinh tren man hinh consol
 		printMenu();
 		valudateChoice(&choice);
 		switch (choice){
@@ -167,8 +167,7 @@ int main(){
 										printf("%sLua chon cua ban ko chinh xac ! vui long nhap lai ! %s", RED, RESET);
 								}
 							}while(recordAndRecruitmentManagementChoice != 3);
-							break;
-						 
+							break;	 
 						case 2 :
 							do{
 								civilAdministrationList();
