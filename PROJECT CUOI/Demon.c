@@ -88,11 +88,11 @@ void employeeList();
 
 // khai bao bien
 void insertEmployee(Employee **empPtr, int *length, int *employee); 
-void printEmployee(Employee *empPtr, int *length, int *employee);
+void printEmployee(Employee *empPtr, int *length);
 void updateEmployee(Employee *empPtr, int *length);
 void DismissEmployee(Employee *empPtr, int *length, int *employee);
 void findEmployeeByName(Employee *empPtr, int *length);
-void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee);
+void sortBySalary(Employee *empPtr, int *length, int*sortchoice);
 void attendanceForTheDay(Employee *empPtr, TimeSheet *empTimePtr,int *length , int *timeSheetLength);
 void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int *timeSheetLength);
 //khai bao bien
@@ -100,7 +100,7 @@ void viewTheWorkSchedule(Employee *empPtr, TimeSheet *empTimePtr,int *length,int
 // ket thuc !!!
 int main(){
 	int size = 20; // kich co cung nhu so luong nhan vien luc dau luon !
-	int sizeTime = 0;  // kich cu cua Record -> se tang khi nhan vien cham cong
+	int logCount  = 0;  // kich cu cua Record -> se tang khi nhan vien cham cong
 	int choice; // lua chon khi moi vao Menu
 	int recordAndRecruitmentManagementChoice; // lua chon quan ly ho so
 	int humanResourceManagementChoice; //Lua chon quan ly nhan su
@@ -195,7 +195,7 @@ int main(){
 								valudateChoice(&dataManagementAndReportingChoice);
 								switch (dataManagementAndReportingChoice){
 									case 1 :{
-										printEmployee(empList, &size, &employees);
+										printEmployee(empList, &size);
 										break;
 									}
 									case 2 : {
@@ -203,7 +203,7 @@ int main(){
 										break;
 									}
 									case 3 : {
-										sortBySalary(empList, &size, &choice, &employees);
+										sortBySalary(empList, &size, &choice);
 										break;
 									}
 									case 4 : {
@@ -233,10 +233,10 @@ int main(){
 					valudateChoice(&choice);
 					switch (choice){
 						case 1 : 
-							attendanceForTheDay(empList, empTime, &size, &sizeTime);
+							attendanceForTheDay(empList, empTime, &size, &logCount );
 							break;
 						case 2 :{
-							viewTheWorkSchedule(empList, empTime, &size, &sizeTime);
+							viewTheWorkSchedule(empList, empTime, &size, &logCount );
 							break;
 						}
 						case 3 :
@@ -420,14 +420,11 @@ void inputToName(char *a, int size){
 // ham chon lua chon va chon so + Validate het
 void valudateChoice(int *choicePtr){
 	char input[100];
-	int sizeOfString;
-	int isSpace;
 	int validate = 0;
 	do{
 		printf("%s", BRIGHT_GREEN);
 		fgets(input, 100, stdin);
 		printf("%s", RESET);
-		sizeOfString  =strlen(input);
 		input[strcspn(input, "\n")]= '\0';
 		if(strlen(input) == 0){
 			printf("%sERROR !! khong duoc de trong ! \nVui long nhap lai: %s", RED, RESET);
@@ -452,13 +449,10 @@ void valudateChoice(int *choicePtr){
 void valudateSalary(double *choicePtr){
 	char input[100];
 	int validate = 0;
-	int isSpace;
-	int sizeOfString;
 	do{
 		printf("%s", GREEN);
 		fgets(input, 100, stdin);
 		printf("%s", RESET);
-		sizeOfString = (int)strlen(input);
 		input[strcspn(input, "\n")]= '\0';
 		if(strlen(input) == 0){
 			printf("%sDau vao khong duoc de trong ! \nVui long nhap lai: %s",RED, RESET);
@@ -753,7 +747,7 @@ void insertEmployee(Employee **empPtr, int *length, int *employee){
 chuc nang: Hien thi nhan vien va so luong + so trang
 Yeu cau: Nghi nhung cach nguoi dung de xem cho no tien loi
 */ 
-void printEmployee(Employee *empPtr, int *length, int *employee){
+void printEmployee(Employee *empPtr, int *length){
 	int totalEmployees = (*length);
 	char choiceMenu;
 	int empPerPage = 5;
@@ -845,6 +839,7 @@ void printEmployee(Employee *empPtr, int *length, int *employee){
 							if(empPerPage > totalEmployees){
 								printf("%sERROR !! Khong the in so luong nhan vien nhieu hon tong nhan vien !\n%s", RED, RESET);
 							}else{
+								page = 0;
 								break;
 							}
 						}while(1);
@@ -1038,7 +1033,7 @@ void findEmployeeByName(Employee *empPtr, int *length){
 chuc nang: Sap xep nhan vien theo luong cua minh // co the dung thuat toan khac (neu duoc yeu cau) !
 Yeu cau: Bat nhung truong hop nhap het loi & code sao tinh gon la du
 */ 
-void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee){
+void sortBySalary(Employee *empPtr, int *length, int*sortchoice){
 	Employee temp;
 	if((*length) == 0){
 		printf("%sDanh sach rong ! Vui long them danh sach truoc khi sap xep ! \n%s",RED, RESET);
@@ -1065,8 +1060,9 @@ void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee){
 						} 
 						empPtr[j+1] = temp;
 					}
-					printEmployee(empPtr, length,employee);
 					printf("%sSap xep thanh cong !\n%s", GREEN, RESET);
+					printEmployee(empPtr, length);
+					
 					break;
 				}
 				case 2 :{
@@ -1079,8 +1075,9 @@ void sortBySalary(Employee *empPtr, int *length, int*sortchoice, int *employee){
 						} 
 						empPtr[j+1] = temp;
 					}
-					printEmployee(empPtr, length,employee);
 					printf("%sSap xep thanh cong !\n%s", GREEN, RESET);
+					printEmployee(empPtr, length);
+					
 					break;
 				}
 				case 3 :
